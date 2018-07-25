@@ -6,6 +6,7 @@ import { TrophyIcon } from 'mdi-react';
 
 import Dialog from '@material-ui/core/Dialog';
 
+import Logo from '../Logo';
 import Ranking from '../Ranking';
 
 import Container from './Container'
@@ -15,8 +16,7 @@ import styles from './styles.scss';
 const Home = (props) => {
 	return (
 		<section className={styles.homeWrapper}>
-			<i className={styles.logo} />
-			<h1 className={styles.title}>StarQuiz!</h1>
+			<Logo />
 
 			<div className={styles.buttons}>
 				<Link to="swquiz" className={styles.button}>JOGAR</Link>
