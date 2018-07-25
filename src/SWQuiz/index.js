@@ -10,8 +10,7 @@ import styles from './styles.scss';
 
 
 const SWQuiz = (props) => {
-	const { itens } = props;
-
+	const { closeHintModal, dateTimeStart, isGameFinished, itens, openHintModal } = props;
 	return (
 		<div className={styles.swquizWrapper}>
 			<div className={styles.top}>
@@ -27,7 +26,15 @@ const SWQuiz = (props) => {
 				{
 					itens ?
 						itens.map(item => (
-							<QuizItem />
+							<QuizItem
+								{...item}
+								closeHintModal={closeHintModal}
+								id={item.url}
+								imageUrl="teste"
+								isPlaceholder={isGameFinished || !dateTimeStart}
+								key={item.url}
+								openHintModal={openHintModal}
+							/>
 						))
 					:
 						<div className={styles.emptyItens}>

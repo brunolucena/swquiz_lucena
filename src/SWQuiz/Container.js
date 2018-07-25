@@ -338,7 +338,14 @@ const Container = (Component) => (
 				score: 0 // Player final score.
 			};
 
+			this.closeHintModal = this.closeHintModal.bind(this);
 			this.getItensFromPage = this.getItensFromPage.bind(this);
+			this.openHintModal = this.openHintModal.bind(this);
+		}
+
+		closeHintModal(id) {
+			// TODO achar o item que foi clicado pelo id, colocar a flag openedModal como false
+			console.log('closeHintModal', id);
 		}
 
 		getItensFromPage(page) {
@@ -397,12 +404,19 @@ const Container = (Component) => (
 			return pages.length > 0
 		}
 
+		openHintModal(id) {
+			// TODO achar o item que foi clicado pelo id, colocar as flags openedModal e hasUsedHint como true
+			console.log('openHintModal', id);
+		}
+
 		render() {
 			return (
 				<Component
 					{...this.props}
 					{...this.state}
+					closeHintModal={this.closeHintModal}
 					itens={this.getItensFromPage(this.state.activePage)}
+					openHintModal={this.openHintModal}
 				/>
 			)
 		}
