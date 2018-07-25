@@ -9,16 +9,18 @@ import styles from './styles.scss';
 const Logo = (props) => {
 	const logoWrapperStyles = {
 		flexFlow: props.type == 'vertical' ? 'column' : 'row',
-		transform: `scale(${props.size > 1 ? 1 : props.size < 0.1 ? 0.1 : props.size})`
 	};
 
 	const logoStyles = {
-		backgroundImage: `url(${props.imageUrl})`
+		backgroundImage: `url(${props.imageUrl})`,
+		backgroundSize: `${props.size}px`,
+		height: `${props.size}px`,
+		width: `${props.size}px`
 	};
 
 	const titleStyles = {
-		fontSize: props.type == 'vertical' ? '4rem' : '12rem',
-		marginLeft: props.type == 'vertical' ? 'initial' : '2rem'
+		fontSize: props.type == 'vertical' ? `${props.size / 2}px` : `${props.size}px`,
+		marginLeft: props.type == 'vertical' ? 'initial' : '1rem'
 	}
 
 	return (

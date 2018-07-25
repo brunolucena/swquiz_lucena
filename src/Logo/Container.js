@@ -9,13 +9,13 @@ const Container = (Component) => (
 	class extends React.Component {
 		static propTypes = {
 			imageUrl: PropTypes.string.isRequired,
-			size: PropTypes.number, // 0.1 to 1
+			size: PropTypes.number, // In px
 			type: PropTypes.string // horizontal or vertical
 		};
 
 		static defaultProps = {
 			imageUrl: darthVader,
-			size: 1,
+			size: 200,
 			type: 'vertical'
 		};
 

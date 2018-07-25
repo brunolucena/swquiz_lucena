@@ -5,11 +5,10 @@
 .logoWrapper {
 	display: flex;
 	align-items: center;
+	transform-origin: 0;
 }
 
 .logo {
 	display: block;
-	width: 236px;
-	height: 221px;
 	background-repeat: no-repeat;
 }
