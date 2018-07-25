@@ -41,6 +41,7 @@ const Timer = (props) => {
 						<div className={styles.time}>
 							{
 								isStarted ?
+
 									<Countdown endDate={moment(dateTimeLimit)} />
 								:
 									`${hhmmss(timePlaceholder)}`

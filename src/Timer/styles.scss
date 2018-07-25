@@ -33,3 +33,12 @@
 		}
 	}
 }
+
+@keyframes alarm{
+	from{
+		transform: rotate(10deg);
+	}
+	to{
+		transform: rotate(-10deg);
+	}
+}
