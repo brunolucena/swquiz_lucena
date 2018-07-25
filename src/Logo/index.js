@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
 
@@ -21,4 +20,4 @@ Logo.propTypes = {
 	type: PropTypes.string // horizontal or vertical
 };
 
-export default withRouter(Container(Logo));
+export default Container(Logo);

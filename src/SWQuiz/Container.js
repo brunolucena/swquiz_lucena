@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-
 /**
  * -SWQuiz is an instance of a Star Wars Quiz Game.
  * -The game is built over the API https://swapi.co/
@@ -63,7 +62,12 @@ const Container = (Component) => (
 		}
 
 		render() {
-			return <Component {...this.props} {...this.state} />
+			return (
+				<Component
+					{...this.props}
+					{...this.state}
+				/>
+			)
 		}
 	}
 )
