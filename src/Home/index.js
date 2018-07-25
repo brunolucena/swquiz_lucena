@@ -34,7 +34,7 @@ const Home = (props) => {
 			</div>
 
 			<Dialog open={props.openedModalRanking} onClose={props.closeModalRanking} aria-labelledby="simple-dialog-title">
-				<Ranking data={[]} />
+				<Ranking data={props.rankingData} />
 			</Dialog>
 
 			<div className={styles.gameInfo}>
@@ -48,7 +48,8 @@ Home.propTypes = {
 	closeModalRanking: PropTypes.func.isRequired, // Function to close modal
 	openedModalRanking: PropTypes.bool.isRequired, // Should open modal with Ranking
 	openModalRanking: PropTypes.func.isRequired, // Function to open modal
-	pendingGameHash: PropTypes.string // Hash of pending game on localStorage
+	pendingGameHash: PropTypes.string, // Hash of pending game on localStorage
+	rankingData: PropTypes.array // Array of swgame objects
 };
 
 export default withRouter(Container(Home));

@@ -12,6 +12,7 @@ const Container = (Component) => (
 			this.closeModalRanking = this.closeModalRanking.bind(this);
 			this.openModalRanking = this.openModalRanking.bind(this);
 			this.pendingGameHash = this.getPendingGameHash();
+			this.rankingData = JSON.parse(localStorage.getItem('swquiz_games'));
 		}
 
 		closeModalRanking() {
@@ -41,6 +42,7 @@ const Container = (Component) => (
 					closeModalRanking={this.closeModalRanking}
 					openModalRanking={this.openModalRanking}
 					pendingGameHash={this.pendingGameHash}
+					rankingData={this.rankingData}
 				/>
 			)
 		}
