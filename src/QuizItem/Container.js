@@ -6,13 +6,14 @@ const Container = (Component) => (
 	class extends React.Component {
 		static propTypes = {
 			birthYear: PropTypes.string,
+			closeHintModal: PropTypes.func.isRequired, // Function that treats when a modal is closed.
 			eyeColor: PropTypes.string,
 			films: PropTypes.arrayOf(PropTypes.string),
 			gender: PropTypes.string,
 			hairColor: PropTypes.string,
 			height: PropTypes.string,
 			homeworld: PropTypes.string,
-			id: PropTypes.number.isRequired, // Necessary to verify the answers.
+			id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired, // Necessary to verify the answers.
 			imageUrl: PropTypes.string.isRequired,
 			isPlaceholder: PropTypes.bool.isRequired,
 			mass: PropTypes.string,

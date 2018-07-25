@@ -5,8 +5,10 @@ import styles from './styles.scss';
 
 
 const QuizItem = (props) => {
+	const { id } = props;
+
 	return (
-		<div>
+		<div className={styles.item}>
 			QuizItem
 		</div>
 	);
