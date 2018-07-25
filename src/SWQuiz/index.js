@@ -6,7 +6,7 @@ import styles from './styles.scss';
 
 const SWQuiz = (props) => {
 	return (
-		<div>
+		<div className={styles.swquizWrapper}>
 			SWQuiz
 		</div>
 	);

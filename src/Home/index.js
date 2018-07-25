@@ -4,7 +4,9 @@ import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { TrophyIcon } from 'mdi-react';
 
-import Ranking from '../Ranking'
+import Dialog from '@material-ui/core/Dialog';
+
+import Ranking from '../Ranking';
 
 import Container from './Container'
 import styles from './styles.scss';
@@ -25,11 +27,15 @@ const Home = (props) => {
 			</div>
 
 			<div className={styles.ranking}>
-				<Link to="ranking" className={styles.buttonLight}>
+				<button onClick={props.openModalRanking} className={styles.buttonLight}>
 					<TrophyIcon />
 					<span className={styles.text}>RANKING</span>
-				</Link>
+				</button>
 			</div>
+
+			<Dialog open={props.openedModalRanking} onClose={props.closeModalRanking} aria-labelledby="simple-dialog-title">
+				<Ranking data={[]} />
+			</Dialog>
 
 			<div className={styles.gameInfo}>
 				Info
@@ -39,7 +45,9 @@ const Home = (props) => {
 }
 
 Home.propTypes = {
-	openedModalRankingg: PropTypes.bool, // Should open modal with Ranking
+	closeModalRanking: PropTypes.func.isRequired, // Function to close modal
+	openedModalRanking: PropTypes.bool.isRequired, // Should open modal with Ranking
+	openModalRanking: PropTypes.func.isRequired, // Function to open modal
 	pendingGameHash: PropTypes.string // Hash of pending game on localStorage
 };
 

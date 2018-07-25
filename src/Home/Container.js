@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 
 const Container = (Component) => (
 	class extends React.Component {
@@ -7,10 +6,18 @@ const Container = (Component) => (
 			super(props);
 
 			this.state = {
-				openedModalRanking: props.match.path == '/ranking'
+				openedModalRanking: false
 			};
 
+			this.closeModalRanking = this.closeModalRanking.bind(this);
+			this.openModalRanking = this.openModalRanking.bind(this);
 			this.pendingGameHash = this.getPendingGameHash();
+		}
+
+		closeModalRanking() {
+			this.setState({
+				openedModalRanking: false
+			});
 		}
 
 		getPendingGameHash() {
@@ -19,11 +26,20 @@ const Container = (Component) => (
 			return games && games.length ? games.filter(g => !g.isFinished)[0].hash : ''
 		}
 
+		openModalRanking() {
+			console.log('openModalRanking')
+			this.setState({
+				openedModalRanking: true
+			});
+		}
+
 		render() {
 			return (
 				<Component
 					{...this.props}
 					{...this.state}
+					closeModalRanking={this.closeModalRanking}
+					openModalRanking={this.openModalRanking}
 					pendingGameHash={this.pendingGameHash}
 				/>
 			)
