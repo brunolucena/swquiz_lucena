@@ -1,0 +1,19 @@
+@import '../shared-styles/buttons';
+@import '../shared-styles/variables';
+
+
+.logoWrapper {
+	display: flex;
+	align-items: center;
+}
+
+.logo {
+	display: block;
+	width: 236px;
+	height: 221px;
+	background-repeat: no-repeat;
+}
+
+.title {
+	font-size: 4rem;
+}
