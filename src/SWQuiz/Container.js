@@ -48,9 +48,9 @@ const Container = (Component) => (
 			this.state = {
 				answers: [], // Answers given by the player.
 				availableAPIPages: [], // Pages available on the API. Ex: [1, 2, 3, 4, 5, 6, 7, 8, 9].
-				dateTimeEnded: '', // DateTime that the game was concluded.
-				dateTimeLimit: '', // DateTime limit to finish the game (dateTimeStart + timeLimit).
-				dateTimeStart: '', // DateTime when the game was started.
+				dateTimeEnded: null, // DateTime that the game was concluded.
+				dateTimeLimit: null, // DateTime limit to finish the game (dateTimeStart + timeLimit).
+				dateTimeStart: null, // DateTime when the game was started.
 				email: '', // Player email.
 				gamePages: {}, // Pages to show at the game. Each page is an attribute of the object and the value is an array that expect to have {props.itensPerPage} length.
 				isGameFinished: false, // Game has been finished and player has put it's name and email.
