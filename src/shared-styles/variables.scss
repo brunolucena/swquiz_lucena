@@ -1,0 +1,13 @@
+// Sizes
+$content-width: 1200px;
+
+// Colors
+$primary1Color: #FFE919;
+$text-color: #4a4a4a;
+
+// Pointer Events
+$p-link: '&:link';
+$p-hover: '&:hover';
+$p-focus: '&:focus';
+$p-active: '&:active';
+$p-event: "#{$p-hover}, #{$p-focus}, #{$p-active}";

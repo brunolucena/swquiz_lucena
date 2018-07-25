@@ -1,0 +1,28 @@
+@import 'variables';
+
+.button{
+	padding: 1rem 2rem;
+	color: $text-color;
+	background: none;
+	border: 1px solid $text-color;
+	border-radius: 5px;
+	cursor: pointer;
+	text-decoration: none;
+	transition: all 0.2s ease-out;
+
+	#{$p-event} {
+		color: $primary1Color;
+		background: #000;
+	}
+}
+
+.buttonLight{
+	@extend .button;
+
+	border: none;
+
+	#{$p-event} {
+		color: $primary1Color;
+		background: none;
+	}
+}
