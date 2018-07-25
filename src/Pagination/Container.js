@@ -2,12 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 
-const propTypes = {};
-const defaultProps = {};
-
 const Container = (Component) => (
 	class extends React.Component {
-
 		constructor(props) {
 			super(props);
 
@@ -19,8 +15,5 @@ const Container = (Component) => (
 		}
 	}
 )
-
-Container.propTypes = propTypes;
-Container.defaultProps = defaultProps;
 
 export default Container;
