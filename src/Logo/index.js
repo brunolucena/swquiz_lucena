@@ -16,10 +16,15 @@ const Logo = (props) => {
 		backgroundImage: `url(${props.imageUrl})`
 	};
 
+	const titleStyles = {
+		fontSize: props.type == 'vertical' ? '4rem' : '12rem',
+		marginLeft: props.type == 'vertical' ? 'initial' : '2rem'
+	}
+
 	return (
 		<div className={styles.logoWrapper} style={logoWrapperStyles}>
-			<i className={styles.logo} style={logoStyles} />
-			<h1 className={styles.title}>StarQuiz!</h1>
+			<span className={styles.logo} style={logoStyles} />
+			<span style={titleStyles}>StarQuiz!</span>
 		</div>
 	);
 }
