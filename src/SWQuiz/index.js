@@ -17,8 +17,8 @@ const SWQuiz = (props) => {
 			<div className={styles.top}>
 				<Logo type='horizontal' size={100} />
 				<Timer
-					dateTimeLimit={new Date(2018, 7, 25, 2)}
-					isStarted={props.dateTimeStart ? props.dateTimeStart : false}
+					dateTimeLimit={new Date(2018, 6, 25, 19, 30)}
+					isStarted={true}
 					timePlaceholder={props.timeLimit}
 				/>
 			</div>
