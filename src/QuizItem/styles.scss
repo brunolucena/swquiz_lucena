@@ -1,1 +1,24 @@
+@import '../shared-styles/buttons';
 @import '../shared-styles/variables';
+
+.item {
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+	margin: 0.5rem;
+	padding: 1rem;
+	min-width: 200px;
+	border: 2px solid black;
+	border-radius: 5px;
+}
+
+.buttons {
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+	margin-top: 1rem;
+
+	> .button {
+		margin-top: 1rem;
+	}
+}

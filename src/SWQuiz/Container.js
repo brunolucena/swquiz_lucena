@@ -344,8 +344,23 @@ const Container = (Component) => (
 		}
 
 		closeHintModal(id) {
-			// TODO achar o item que foi clicado pelo id, colocar a flag openedModal como false
-			console.log('closeHintModal', id);
+			const { activePage, gamePages } = this.state;
+
+			let page = gamePages[activePage];
+
+			page.itens.map(item => {
+				if (item.url == id) {
+					item.openedModal = false;
+				}
+
+				return item
+			});
+
+			gamePages[activePage] = page;
+
+			this.setState({
+				gamePages
+			});
 		}
 
 		getItensFromPage(page) {
@@ -405,8 +420,26 @@ const Container = (Component) => (
 		}
 
 		openHintModal(id) {
-			// TODO achar o item que foi clicado pelo id, colocar as flags openedModal e hasUsedHint como true
-			console.log('openHintModal', id);
+			const { activePage, gamePages } = this.state;
+
+			let page = gamePages[activePage];
+
+			page.itens.map(item => {
+				if (item.url == id) {
+					item.openedModal = true;
+					item.hasUsedHint = true;
+
+					// TODO atualizar answers pra constar que o jogador abriu a modal
+				}
+
+				return item
+			});
+
+			gamePages[activePage] = page;
+
+			this.setState({
+				gamePages
+			});
 		}
 
 		render() {

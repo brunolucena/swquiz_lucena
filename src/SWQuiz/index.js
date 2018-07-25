@@ -30,7 +30,7 @@ const SWQuiz = (props) => {
 								{...item}
 								closeHintModal={closeHintModal}
 								id={item.url}
-								imageUrl="teste"
+								imageUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Star_Wars_Logo.svg/2000px-Star_Wars_Logo.svg.png"
 								isPlaceholder={isGameFinished || !dateTimeStart}
 								key={item.url}
 								openHintModal={openHintModal}

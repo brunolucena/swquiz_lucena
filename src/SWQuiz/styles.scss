@@ -11,13 +11,10 @@
 	justify-content: space-between;
 }
 
-
 .items {
-	display: flex;
-	flex-flow: row wrap;
-	align-items: center;
-	justify-content: space-between;
-	margin: 4rem 2rem;
+	display: grid;
+	margin: 1rem;
+	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 
 	.emptyItens {
 		display: flex;

@@ -32,11 +32,27 @@ const Container = (Component) => (
 		constructor(props) {
 			super(props);
 
-			this.state = {};
+			this.state = {
+				playerNameGuess: ''
+			};
+
+			this.handleInputChange = this.handleInputChange.bind(this);
+		}
+
+		handleInputChange(e) {
+			this.setState({
+				[e.target.name]: e.target.value
+			});
 		}
 
 		render() {
-			return <Component {...this.props} {...this.state} />
+			return (
+				<Component
+					{...this.props}
+					{...this.state}
+					handleInputChange={this.handleInputChange}
+				/>
+			)
 		}
 	}
 )
