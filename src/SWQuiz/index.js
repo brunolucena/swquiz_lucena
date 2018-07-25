@@ -1,6 +1,8 @@
 import React from 'react';
 
 import Logo from '../Logo';
+import Pagination from '../Pagination';
+import QuizItem from '../QuizItem';
 import Timer from '../Timer';
 
 import Container from './Container'
@@ -8,6 +10,8 @@ import styles from './styles.scss';
 
 
 const SWQuiz = (props) => {
+	const { itens } = props;
+
 	return (
 		<div className={styles.swquizWrapper}>
 			<div className={styles.top}>
@@ -20,11 +24,20 @@ const SWQuiz = (props) => {
 			</div>
 
 			<div className={styles.items}>
-
+				{
+					itens ?
+						itens.map(item => (
+							<QuizItem />
+						))
+					:
+						<div className={styles.emptyItens}>
+							Empty itens
+						</div>
+				}
 			</div>
 
 			<div className={styles.pagination}>
-
+				<Pagination />
 			</div>
 		</div>
 	);

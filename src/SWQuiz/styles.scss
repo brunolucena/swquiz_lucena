@@ -1,7 +1,27 @@
 @import '../shared-styles/variables';
 
+
+.swquizWrapper {
+	margin: 1rem;
+}
+
 .top {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+}
+
+
+.items {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
+	justify-content: space-between;
+	margin: 4rem 2rem;
+
+	.emptyItens {
+		display: flex;
+		justify-content: center;
+		width: 100%;
+	}
 }

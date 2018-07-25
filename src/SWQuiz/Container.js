@@ -46,19 +46,28 @@ const Container = (Component) => (
 			super(props);
 
 			this.state = {
+				activePage: 1, // Page active.
 				answers: [], // Answers given by the player.
 				availableAPIPages: [], // Pages available on the API. Ex: [1, 2, 3, 4, 5, 6, 7, 8, 9].
 				dateTimeEnded: null, // DateTime that the game was concluded.
 				dateTimeLimit: null, // DateTime limit to finish the game (dateTimeStart + timeLimit).
 				dateTimeStart: null, // DateTime when the game was started.
 				email: '', // Player email.
-				gamePages: {}, // Pages to show at the game. Each page is an attribute of the object and the value is an array that expect to have {props.itensPerPage} length.
+				gamePages: {}, // Pages to show at the game. Each page is an attribute as the page and the value as an array that expect to have {props.itensPerPage} length.
 				isGameFinished: false, // Game has been finished and player has put it's name and email.
 				isGameReady: false, // Game is ready to start.
 				name: '', // Player name.
 				pagesLoadedFromAPI: [], // Pages that were loaded from the API. Ex: [1, 4, 7].
 				score: 0 // Player final score.
 			};
+
+			this.getItensFromPage = this.getItensFromPage.bind(this);
+		}
+
+		getItensFromPage(page) {
+			const { gamePages } = this.state;
+
+			return gamePages[page]
 		}
 
 		render() {
@@ -66,6 +75,7 @@ const Container = (Component) => (
 				<Component
 					{...this.props}
 					{...this.state}
+					itens={this.getItensFromPage(this.state.activePage)}
 				/>
 			)
 		}
