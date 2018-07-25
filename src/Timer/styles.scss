@@ -1,0 +1,35 @@
+@import '../shared-styles/variables';
+
+.timerContainer {
+	> .timer {
+		padding: 0.5rem 1rem;
+		border-radius: 5px;
+		background: #000;
+		color: $primary1Color;
+		white-space: nowrap;
+		z-index: 20;
+		transition: background 0.2s ease-out;
+
+		> .alarm {
+			display: inline-block;
+			margin-top: -1px;
+			font-size: 1.5rem;
+			margin-right: 0.5rem;
+			vertical-align: middle;
+		}
+
+		> .time {
+			display: inline-block;
+			vertical-align: middle;
+		}
+
+		&.warning {
+			background: $primary1Color;
+			color: #000;
+
+			> .alarm{
+				animation: alarm 2ms 1000;
+			}
+		}
+	}
+}
