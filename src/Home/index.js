@@ -1,6 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router'
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
 import { TrophyIcon } from 'mdi-react';
@@ -18,10 +17,10 @@ const Home = (props) => {
 			<h1 className={styles.title}>StarQuiz!</h1>
 
 			<div className={styles.buttons}>
-				<Link to="game" className={styles.button}>JOGAR</Link>
+				<Link to="swquiz" className={styles.button}>JOGAR</Link>
 				{
 					props.pendingGameHash &&
-						<Link to={`game/${props.pendingGameHash}`} className={styles.button}>CONTINUAR</Link>
+						<Link to={`swquiz/${props.pendingGameHash}`} className={styles.button}>CONTINUAR</Link>
 				}
 			</div>
 
@@ -35,14 +34,13 @@ const Home = (props) => {
 			<div className={styles.gameInfo}>
 				Info
 			</div>
-
-			<Route path="/ranking" component={Ranking} />
 		</section>
 	);
 }
 
 Home.propTypes = {
+	openedModalRankingg: PropTypes.bool, // Should open modal with Ranking
 	pendingGameHash: PropTypes.string // Hash of pending game on localStorage
 };
 
-export default Container(Home);
+export default withRouter(Container(Home));

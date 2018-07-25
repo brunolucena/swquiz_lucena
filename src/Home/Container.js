@@ -1,11 +1,14 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 const Container = (Component) => (
 	class extends React.Component {
 		constructor(props) {
 			super(props);
 
-			this.state = {};
+			this.state = {
+				openedModalRanking: props.match.path == '/ranking'
+			};
 
 			this.pendingGameHash = this.getPendingGameHash();
 		}
