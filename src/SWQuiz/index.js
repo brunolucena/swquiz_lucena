@@ -10,14 +10,15 @@ import styles from './styles.scss';
 
 
 const SWQuiz = (props) => {
-	const { closeHintModal, dateTimeStart, isGameFinished, itens, openHintModal } = props;
+	const { closeHintModal, dateTimeEnded, dateTimeLimit, dateTimeStart, isGameFinished, itens, openHintModal } = props;
 	return (
 		<div className={styles.swquizWrapper}>
 			<div className={styles.top}>
 				<Logo type='horizontal' size={100} />
 				<Timer
-					dateTimeLimit={new Date(2018, 6, 25, 19, 30)}
-					isStarted={true}
+					dateTimeLimit={dateTimeLimit}
+					isStarted={!!dateTimeStart}
+					isVisible={!isGameFinished}
 					timePlaceholder={props.timeLimit}
 				/>
 			</div>

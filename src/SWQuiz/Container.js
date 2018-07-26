@@ -49,9 +49,9 @@ const Container = (Component) => (
 				activePage: 1, // Page active.
 				answers: [], // Answers given by the player.
 				availableAPIPages: [], // Pages available on the API. Ex: [1, 2, 3, 4, 5, 6, 7, 8, 9].
-				dateTimeEnded: null, // DateTime that the game was concluded.
-				dateTimeLimit: null, // DateTime limit to finish the game (dateTimeStart + timeLimit).
-				dateTimeStart: null, // DateTime when the game was started.
+				dateTimeEnded: new Date(2018, 6, 25, 21, 3), // DateTime that the game was concluded.
+				dateTimeLimit: new Date(2018, 6, 25, 21, 10), // DateTime limit to finish the game (dateTimeStart + timeLimit).
+				dateTimeStart: new Date(2018, 6, 25, 21, 0), // DateTime when the game started.
 				email: '', // Player email.
 				gamePages: {
 					1: {

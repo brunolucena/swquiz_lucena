@@ -10,10 +10,11 @@ import styles from './styles.scss';
 
 
 const QuizItem = (props) => {
-	const { closeHintModal, handleInputChange, id, imageUrl, openedModal, openHintModal, playerNameGuess } = props;
+	const { closeHintModal, handleInputChange, id, isPlaceholder, imageUrl, openedModal, openHintModal, playerNameGuess } = props;
 
 	const imageStyles = {
-		backgroundImage: `url(${imageUrl})`,
+		backgroundColor: isPlaceholder ? '#b9b9b9' : 'initial',
+		backgroundImage: isPlaceholder ? 'initial' : `url(${imageUrl})`,
 		backgroundSize: '100px',
 		backgroundRepeat: 'no-repeat',
 		backgroundPosition: 'center',
@@ -22,25 +23,35 @@ const QuizItem = (props) => {
 	};
 
 	return (
-		<div className={styles.item}>
+		<div className={styles.item} style={{borderColor: isPlaceholder ? '#b9b9b9' : '#000'}}>
 			<div className={styles.image} style={imageStyles}>
 			</div>
 
 			<div className={styles.buttons}>
-				<TextField
-					className={styles.textField}
-					name="playerNameGuess"
-					label="Character Name"
-					value={playerNameGuess}
-					onChange={handleInputChange}
-				/>
-				<button className={styles.button} onClick={() => { openHintModal(id) }}>
-					Info...
-				</button>
+				{
+					!isPlaceholder ?
+						[
+							<TextField
+								className={styles.textField}
+								name="playerNameGuess"
+								label="Character Name"
+								value={playerNameGuess}
+								onChange={handleInputChange}
+							/>,
+							<button className={styles.button} onClick={() => { openHintModal(id) }}>
+								Info...
+							</button>,
 
-				<Dialog open={openedModal} onClose={() => { closeHintModal(id) }} aria-labelledby="simple-dialog-title">
-					<CharInfo data={{...props}} />
-				</Dialog>
+							<Dialog open={openedModal} onClose={() => { closeHintModal(id) }} aria-labelledby="simple-dialog-title">
+								<CharInfo data={{...props}} />
+							</Dialog>
+						]
+					:
+						[
+							<div className={styles.placeholder}></div>,
+							<div className={`${styles.placeholder} ${styles.isButton}`}></div>
+						]
+				}
 			</div>
 		</div>
 	);
