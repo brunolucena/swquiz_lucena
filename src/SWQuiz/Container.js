@@ -49,9 +49,9 @@ const Container = (Component) => (
 				activePage: 1, // Page active.
 				answers: [], // Answers given by the player.
 				availableAPIPages: [], // Pages available on the API. Ex: [1, 2, 3, 4, 5, 6, 7, 8, 9].
-				dateTimeEnded: new Date(2018, 6, 25, 21, 3), // DateTime that the game was concluded.
-				dateTimeLimit: new Date(2018, 6, 25, 21, 10), // DateTime limit to finish the game (dateTimeStart + timeLimit).
-				dateTimeStart: new Date(2018, 6, 25, 21, 0), // DateTime when the game started.
+				dateTimeEnded: '', // DateTime that the game was concluded.
+				dateTimeLimit: '', // DateTime limit to finish the game (dateTimeStart + timeLimit).
+				dateTimeStart: '', // DateTime when the game started.
 				email: '', // Player email.
 				gamePages: {
 					1: {
@@ -331,6 +331,7 @@ const Container = (Component) => (
 						]
 					}
 				}, // Pages to show at the game. Each page is an attribute as the page and the value as an array that expect to have {props.itensPerPage} length.
+				hash: props.hash ? props.hash : this.createHash(), // Unique hash
 				isGameFinished: false, // Game has been finished and player has put it's name and email.
 				isGameReady: false, // Game is ready to start.
 				name: '', // Player name.
@@ -361,6 +362,18 @@ const Container = (Component) => (
 			this.setState({
 				gamePages
 			});
+		}
+
+		createHash() {
+			let text = "";
+			let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+			let i;
+			for (i = 0; i < 5; i++) {
+				text += possible.charAt(Math.floor(Math.random() * possible.length));
+			}
+
+			return text;
 		}
 
 		getItensFromPage(page) {
@@ -440,6 +453,16 @@ const Container = (Component) => (
 			this.setState({
 				gamePages
 			});
+		}
+
+		startGame() {
+			// TODO
+			// Carregas todas as paginas da API em uma variavel temporaria
+			// Distribuir os itens em paginas de acordo com {itensPerPage}
+			// Para cada item, adicionar uma flag {openedModal: false}, um {id} igual a {item.url} e uma flag {isReady: false}
+			// Adicionar para as duas primeiras paginas um href em {imageUrl} de acordo com uma API apropriada
+			// e substituir os enderecos da API por seus respectivos valores de: films, species, vehicles, starships e
+			// homeworld. Apos carregas essas informacoes, trocar flag {isReady} para true
 		}
 
 		render() {

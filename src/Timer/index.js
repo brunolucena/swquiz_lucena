@@ -54,7 +54,10 @@ const Timer = (props) => {
 }
 
 Timer.propTypes = {
-	dateTimeLimit: PropTypes.instanceOf(Date).isRequired, // DateTime limit to finish game
+	dateTimeLimit: PropTypes.oneOfType([
+		PropTypes.instanceOf(Date),
+		PropTypes.string
+	]).isRequired, // DateTime limit to finish game
 	isStarted: PropTypes.bool.isRequired, // Timer is started
 	isVisible: PropTypes.bool, // Timer is visible
 	timePlaceholder: PropTypes.number.isRequired // Display placeholder of how many time the player will have. In seconds
