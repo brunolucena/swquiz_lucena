@@ -8,19 +8,29 @@ const defaultProps = {};
 const Container = (Component) => (
 	class extends React.Component {
 		static propTypes ={
-			birthYear: PropTypes.string,
-			eyeColor: PropTypes.string,
-			films: PropTypes.arrayOf(PropTypes.string),
+			birth_year: PropTypes.string,
+			eye_color: PropTypes.string,
+			films: PropTypes.arrayOf(PropTypes.shape({
+				title: PropTypes.string
+			})),
 			gender: PropTypes.string,
-			hairColor: PropTypes.string,
+			hair_color: PropTypes.string,
 			height: PropTypes.string,
-			homeworld: PropTypes.string,
+			homeworld: PropTypes.shape({
+				name: PropTypes.string
+			}),
 			imageUrl: PropTypes.string.isRequired,
 			mass: PropTypes.string,
-			skinColor: PropTypes.string,
-			species: PropTypes.arrayOf(PropTypes.string),
-			starships: PropTypes.arrayOf(PropTypes.string),
-			vehicles: PropTypes.arrayOf(PropTypes.string)
+			skin_color: PropTypes.string,
+			species: PropTypes.arrayOf(PropTypes.shape({
+				name: PropTypes.string
+			})),
+			starships: PropTypes.arrayOf(PropTypes.shape({
+				name: PropTypes.string
+			})),
+			vehicles: PropTypes.arrayOf(PropTypes.shape({
+				name: PropTypes.string
+			})),
 		};
 
 		constructor(props) {
