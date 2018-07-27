@@ -32,24 +32,25 @@ const QuizItem = (props) => {
 					!isPlaceholder ?
 						[
 							<TextField
+								key="text-field"
 								className={styles.textField}
 								name="playerNameGuess"
 								label="Character Name"
 								value={playerNameGuess}
 								onChange={handleInputChange}
 							/>,
-							<button className={styles.button} onClick={() => { openHintModal(id) }}>
+							<button key="button" className={styles.button} onClick={() => { openHintModal(id) }}>
 								Info...
 							</button>,
 
-							<Dialog open={openedModal} onClose={() => { closeHintModal(id) }} aria-labelledby="simple-dialog-title">
+							<Dialog key="dialog" open={openedModal} onClose={() => { closeHintModal(id) }} aria-labelledby="simple-dialog-title">
 								<CharInfo data={{...props}} />
 							</Dialog>
 						]
 					:
 						[
-							<div className={styles.placeholder}></div>,
-							<div className={`${styles.placeholder} ${styles.isButton}`}></div>
+							<div key="placeholder-1" className={styles.placeholder}></div>,
+							<div key="placeholder-2" className={`${styles.placeholder} ${styles.isButton}`}></div>
 						]
 				}
 			</div>
