@@ -5,24 +5,49 @@ import PropTypes from 'prop-types';
 const Container = (Component) => (
 	class extends React.Component {
 		static propTypes = {
-			birthYear: PropTypes.string,
+			birth_year: PropTypes.string,
+			eye_color: PropTypes.string,
 			closeHintModal: PropTypes.func, // Function that treats when a modal is closed.
-			eyeColor: PropTypes.string,
-			films: PropTypes.arrayOf(PropTypes.string),
+			films: PropTypes.oneOfType([
+				PropTypes.arrayOf(PropTypes.shape({
+					title: PropTypes.string
+				})),
+				PropTypes.arrayOf(PropTypes.string),
+			]),
 			gender: PropTypes.string,
-			hairColor: PropTypes.string,
+			hair_color: PropTypes.string,
 			height: PropTypes.string,
-			homeworld: PropTypes.string,
+			homeworld: PropTypes.oneOfType([
+				PropTypes.shape({
+					name: PropTypes.string
+				}),
+				PropTypes.string
+			]),
 			id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]), // Necessary to verify the answers.
 			imageUrl: PropTypes.string,
 			isPlaceholder: PropTypes.bool,
 			mass: PropTypes.string,
 			openedModal: PropTypes.bool, // Open modal with hints.
 			openHintModal: PropTypes.func, // Function that treats when a modal is opened.
-			skinColor: PropTypes.string,
-			species: PropTypes.arrayOf(PropTypes.string),
-			starships: PropTypes.arrayOf(PropTypes.string),
-			vehicles: PropTypes.arrayOf(PropTypes.string)
+			skin_color: PropTypes.string,
+			species: PropTypes.oneOfType([
+				PropTypes.arrayOf(PropTypes.shape({
+					name: PropTypes.string
+				})),
+				PropTypes.arrayOf(PropTypes.string),
+			]),
+			starships: PropTypes.oneOfType([
+				PropTypes.arrayOf(PropTypes.shape({
+					name: PropTypes.string
+				})),
+				PropTypes.arrayOf(PropTypes.string),
+			]),
+			vehicles: PropTypes.oneOfType([
+				PropTypes.arrayOf(PropTypes.shape({
+					name: PropTypes.string
+				})),
+				PropTypes.arrayOf(PropTypes.string),
+			])
 		};
 
 		static defaultProps = {
@@ -35,6 +60,8 @@ const Container = (Component) => (
 			this.state = {
 				playerNameGuess: ''
 			};
+
+			console.log('QuizItem props', props);
 
 			this.handleInputChange = this.handleInputChange.bind(this);
 		}
