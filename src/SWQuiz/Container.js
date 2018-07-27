@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Helpers from './Helpers';
+import Services from './Services';
+
 /**
  * -SWQuiz is an instance of a Star Wars Quiz Game.
  * -The game is built over the API https://swapi.co/
@@ -48,293 +51,17 @@ const Container = (Component) => (
 			this.state = {
 				activePage: 1, // Page active.
 				answers: [], // Answers given by the player.
+				apiPeople: [], // All people from API.
 				availableAPIPages: [], // Pages available on the API. Ex: [1, 2, 3, 4, 5, 6, 7, 8, 9].
 				dateTimeEnded: '', // DateTime that the game was concluded.
 				dateTimeLimit: '', // DateTime limit to finish the game (dateTimeStart + timeLimit).
 				dateTimeStart: '', // DateTime when the game started.
 				email: '', // Player email.
-				gamePages: {
-					1: {
-						isReady: true,
-						itens: [
-							{
-								"name": "Luke Skywalker",
-								"height": "172",
-								"mass": "77",
-								"hair_color": "blond",
-								"skin_color": "fair",
-								"eye_color": "blue",
-								"birth_year": "19BBY",
-								"gender": "male",
-								"homeworld": "https://swapi.co/api/planets/1/",
-								"films": [
-									"https://swapi.co/api/films/2/",
-									"https://swapi.co/api/films/6/",
-									"https://swapi.co/api/films/3/",
-									"https://swapi.co/api/films/1/",
-									"https://swapi.co/api/films/7/"
-								],
-								"species": [
-									"https://swapi.co/api/species/1/"
-								],
-								"vehicles": [
-									"https://swapi.co/api/vehicles/14/",
-									"https://swapi.co/api/vehicles/30/"
-								],
-								"starships": [
-									"https://swapi.co/api/starships/12/",
-									"https://swapi.co/api/starships/22/"
-								],
-								"created": "2014-12-09T13:50:51.644000Z",
-								"edited": "2014-12-20T21:17:56.891000Z",
-								"url": "https://swapi.co/api/people/1/"
-							},
-							{
-								"name": "C-3PO",
-								"height": "167",
-								"mass": "75",
-								"hair_color": "n/a",
-								"skin_color": "gold",
-								"eye_color": "yellow",
-								"birth_year": "112BBY",
-								"gender": "n/a",
-								"homeworld": "https://swapi.co/api/planets/1/",
-								"films": [
-									"https://swapi.co/api/films/2/",
-									"https://swapi.co/api/films/5/",
-									"https://swapi.co/api/films/4/",
-									"https://swapi.co/api/films/6/",
-									"https://swapi.co/api/films/3/",
-									"https://swapi.co/api/films/1/"
-								],
-								"species": [
-									"https://swapi.co/api/species/2/"
-								],
-								"vehicles": [],
-								"starships": [],
-								"created": "2014-12-10T15:10:51.357000Z",
-								"edited": "2014-12-20T21:17:50.309000Z",
-								"url": "https://swapi.co/api/people/2/"
-							},
-							{
-								"name": "R2-D2",
-								"height": "96",
-								"mass": "32",
-								"hair_color": "n/a",
-								"skin_color": "white, blue",
-								"eye_color": "red",
-								"birth_year": "33BBY",
-								"gender": "n/a",
-								"homeworld": "https://swapi.co/api/planets/8/",
-								"films": [
-									"https://swapi.co/api/films/2/",
-									"https://swapi.co/api/films/5/",
-									"https://swapi.co/api/films/4/",
-									"https://swapi.co/api/films/6/",
-									"https://swapi.co/api/films/3/",
-									"https://swapi.co/api/films/1/",
-									"https://swapi.co/api/films/7/"
-								],
-								"species": [
-									"https://swapi.co/api/species/2/"
-								],
-								"vehicles": [],
-								"starships": [],
-								"created": "2014-12-10T15:11:50.376000Z",
-								"edited": "2014-12-20T21:17:50.311000Z",
-								"url": "https://swapi.co/api/people/3/"
-							},
-							{
-								"name": "Darth Vader",
-								"height": "202",
-								"mass": "136",
-								"hair_color": "none",
-								"skin_color": "white",
-								"eye_color": "yellow",
-								"birth_year": "41.9BBY",
-								"gender": "male",
-								"homeworld": "https://swapi.co/api/planets/1/",
-								"films": [
-									"https://swapi.co/api/films/2/",
-									"https://swapi.co/api/films/6/",
-									"https://swapi.co/api/films/3/",
-									"https://swapi.co/api/films/1/"
-								],
-								"species": [
-									"https://swapi.co/api/species/1/"
-								],
-								"vehicles": [],
-								"starships": [
-									"https://swapi.co/api/starships/13/"
-								],
-								"created": "2014-12-10T15:18:20.704000Z",
-								"edited": "2014-12-20T21:17:50.313000Z",
-								"url": "https://swapi.co/api/people/4/"
-							},
-							{
-								"name": "Leia Organa",
-								"height": "150",
-								"mass": "49",
-								"hair_color": "brown",
-								"skin_color": "light",
-								"eye_color": "brown",
-								"birth_year": "19BBY",
-								"gender": "female",
-								"homeworld": "https://swapi.co/api/planets/2/",
-								"films": [
-									"https://swapi.co/api/films/2/",
-									"https://swapi.co/api/films/6/",
-									"https://swapi.co/api/films/3/",
-									"https://swapi.co/api/films/1/",
-									"https://swapi.co/api/films/7/"
-								],
-								"species": [
-									"https://swapi.co/api/species/1/"
-								],
-								"vehicles": [
-									"https://swapi.co/api/vehicles/30/"
-								],
-								"starships": [],
-								"created": "2014-12-10T15:20:09.791000Z",
-								"edited": "2014-12-20T21:17:50.315000Z",
-								"url": "https://swapi.co/api/people/5/"
-							},
-							{
-								"name": "Owen Lars",
-								"height": "178",
-								"mass": "120",
-								"hair_color": "brown, grey",
-								"skin_color": "light",
-								"eye_color": "blue",
-								"birth_year": "52BBY",
-								"gender": "male",
-								"homeworld": "https://swapi.co/api/planets/1/",
-								"films": [
-									"https://swapi.co/api/films/5/",
-									"https://swapi.co/api/films/6/",
-									"https://swapi.co/api/films/1/"
-								],
-								"species": [
-									"https://swapi.co/api/species/1/"
-								],
-								"vehicles": [],
-								"starships": [],
-								"created": "2014-12-10T15:52:14.024000Z",
-								"edited": "2014-12-20T21:17:50.317000Z",
-								"url": "https://swapi.co/api/people/6/"
-							},
-							{
-								"name": "Beru Whitesun lars",
-								"height": "165",
-								"mass": "75",
-								"hair_color": "brown",
-								"skin_color": "light",
-								"eye_color": "blue",
-								"birth_year": "47BBY",
-								"gender": "female",
-								"homeworld": "https://swapi.co/api/planets/1/",
-								"films": [
-									"https://swapi.co/api/films/5/",
-									"https://swapi.co/api/films/6/",
-									"https://swapi.co/api/films/1/"
-								],
-								"species": [
-									"https://swapi.co/api/species/1/"
-								],
-								"vehicles": [],
-								"starships": [],
-								"created": "2014-12-10T15:53:41.121000Z",
-								"edited": "2014-12-20T21:17:50.319000Z",
-								"url": "https://swapi.co/api/people/7/"
-							},
-							{
-								"name": "R5-D4",
-								"height": "97",
-								"mass": "32",
-								"hair_color": "n/a",
-								"skin_color": "white, red",
-								"eye_color": "red",
-								"birth_year": "unknown",
-								"gender": "n/a",
-								"homeworld": "https://swapi.co/api/planets/1/",
-								"films": [
-									"https://swapi.co/api/films/1/"
-								],
-								"species": [
-									"https://swapi.co/api/species/2/"
-								],
-								"vehicles": [],
-								"starships": [],
-								"created": "2014-12-10T15:57:50.959000Z",
-								"edited": "2014-12-20T21:17:50.321000Z",
-								"url": "https://swapi.co/api/people/8/"
-							},
-							{
-								"name": "Biggs Darklighter",
-								"height": "183",
-								"mass": "84",
-								"hair_color": "black",
-								"skin_color": "light",
-								"eye_color": "brown",
-								"birth_year": "24BBY",
-								"gender": "male",
-								"homeworld": "https://swapi.co/api/planets/1/",
-								"films": [
-									"https://swapi.co/api/films/1/"
-								],
-								"species": [
-									"https://swapi.co/api/species/1/"
-								],
-								"vehicles": [],
-								"starships": [
-									"https://swapi.co/api/starships/12/"
-								],
-								"created": "2014-12-10T15:59:50.509000Z",
-								"edited": "2014-12-20T21:17:50.323000Z",
-								"url": "https://swapi.co/api/people/9/"
-							},
-							{
-								"name": "Obi-Wan Kenobi",
-								"height": "182",
-								"mass": "77",
-								"hair_color": "auburn, white",
-								"skin_color": "fair",
-								"eye_color": "blue-gray",
-								"birth_year": "57BBY",
-								"gender": "male",
-								"homeworld": "https://swapi.co/api/planets/20/",
-								"films": [
-									"https://swapi.co/api/films/2/",
-									"https://swapi.co/api/films/5/",
-									"https://swapi.co/api/films/4/",
-									"https://swapi.co/api/films/6/",
-									"https://swapi.co/api/films/3/",
-									"https://swapi.co/api/films/1/"
-								],
-								"species": [
-									"https://swapi.co/api/species/1/"
-								],
-								"vehicles": [
-									"https://swapi.co/api/vehicles/38/"
-								],
-								"starships": [
-									"https://swapi.co/api/starships/48/",
-									"https://swapi.co/api/starships/59/",
-									"https://swapi.co/api/starships/64/",
-									"https://swapi.co/api/starships/65/",
-									"https://swapi.co/api/starships/74/"
-								],
-								"created": "2014-12-10T16:16:29.192000Z",
-								"edited": "2014-12-20T21:17:50.325000Z",
-								"url": "https://swapi.co/api/people/10/"
-							}
-						]
-					}
-				}, // Pages to show at the game. Each page is an attribute as the page and the value as an array that expect to have {props.itensPerPage} length.
-				hash: props.hash ? props.hash : this.createHash(), // Unique hash
+				hash: props.hash, // Unique hash
 				isGameFinished: false, // Game has been finished and player has put it's name and email.
 				isGameReady: false, // Game is ready to start.
 				name: '', // Player name.
+				pages: [], // Pages to show at the game. Each page is an attribute as the page and the value as an array that expect to have {props.itensPerPage} length.
 				pagesLoadedFromAPI: [], // Pages that were loaded from the API. Ex: [1, 4, 7].
 				score: 0 // Player final score.
 			};
@@ -344,12 +71,327 @@ const Container = (Component) => (
 			this.openHintModal = this.openHintModal.bind(this);
 		}
 
+		componentDidMount() {
+			const { activePage, apiPeople, hash } = this.state;
+			const { getAPIResource } = Services;
+
+			this.loadPeoplesFromAPI();
+
+			// TODO get all pages from api, store it on a temporary var and then create pages
+			// if there is a game on storage, create pages with that info
+			// else create pages randomly
+
+			if (hash) {
+				console.log('has hash');
+			} else {
+				console.log('has no hash');
+				this.setState({
+					hash: this.createHash()
+				});
+			}
+		}
+
+		/**
+		 * @description Create pages from peoples array. Saves the data both on component and localStorage.
+		 *				At localStorage, saves only the url to the char, so the localStorage does not have the
+		 *				actual answers for the Quiz.
+		 *
+		 *				When loading the data, if it's loading an already existing game, keeps the same pages
+		 *				from the game saved on localStorage, so the chars will always appear at the same order.
+		 *				When creating a new game, will create pages in a random char order.
+		 *
+		 *				After the pages are loaded, it loads the info of first two pages.
+		 *
+		 * @param {Array} peoples List of peoples from API.
+		 * @param {string} gameHash (?) optional. Hash of an already existing game on localStorage.
+		 */
+		createPages(peoples, gameHash) {
+			const { itensPerPage } = this.props;
+			const { getAPIResource } = Services;
+			const { getGame, setGame } = Helpers;
+
+			peoples = peoples.sort((a, b) => (0.5 - Math.random()));
+
+			let game = getGame(gameHash);
+			let pages = {};
+
+			if (game) {
+				let keys = Object.keys(game.pages);
+
+				keys.forEach((pageNumber, indexPages) => {
+					let page = game.pages[pageNumber];
+					game.pages[pageNumber] = [];
+
+					if (!pages[pageNumber]) {
+						pages[pageNumber] = [];
+					}
+
+					page.forEach((character, indexCharacters) => {
+						getAPIResource(character.url)
+							.then(response => {
+								console.log('getAPIResource character', response);
+
+								pages[pageNumber].push(response.data);
+
+								if (indexPages + 1 == keys.length) {
+									this.fetchPagesInfo();
+								}
+							})
+							.catch(response => {
+								console.log('getAPIResource character error', response)
+							})
+					});
+				});
+			} else {
+				const hash = this.createHash();
+
+				game = {
+					hash,
+					pages: {},
+					isFinished: false
+				};
+
+				let actualPage = 1;
+
+				peoples.forEach(people => {
+					if (!game.pages[actualPage]) {
+						game.pages[actualPage] = [];
+					}
+
+					if (!pages[actualPage]) {
+						pages[actualPage] = [];
+					}
+
+					if (pages[actualPage].length == itensPerPage) {
+						actualPage++;
+
+						pages[actualPage] = [];
+						game.pages[actualPage] = [];
+					}
+
+					const peopleToLocalStorage = {
+						url: people.url
+					};
+
+					pages[actualPage].push(people);
+					game.pages[actualPage].push(peopleToLocalStorage);
+				});
+
+				setGame(game);
+
+				this.setState({
+					hash,
+					pages
+				}, () => {
+					this.loadPageInfo(this.state.activePage);
+				});
+			}
+		}
+
+		/**
+		 * @description Load info from a specific character to display as hints.
+		 */
+		loadCharacterInfo(characterId) {
+			const { activePage, pages } = this.state;
+			const { getAPIResource } = Services;
+
+			let page = pages[activePage];
+
+			let characterIndex = page.findIndex(c => c.url == characterId);
+			let character = page[characterIndex];
+
+			let films = character.films;
+			let homeworld = character.homeworld;
+			let species = character.species;
+			let starships = character.starships;
+			let vehicles = character.vehicles;
+
+			character.films = [];
+			character.homeworld = {};
+			character.species = [];
+			character.starships = [];
+			character.vehicles = [];
+
+			getAPIResource(homeworld)
+				.then(response => {
+					character.homeworld = response.data;
+
+					page = pages[activePage];
+					page[characterIndex] = character;
+					pages[activePage] = page;
+
+					this.setState({
+						pages
+					});
+				})
+				.catch(response => {
+					console.log('error', response)
+				});
+			;
+
+			films.forEach((filmUrl, indexFilms) => {
+				getAPIResource(filmUrl)
+					.then(response => {
+						character.films.push(response.data);
+
+						if (indexFilms + 1 == films.length) {
+							page = pages[activePage];
+							page[characterIndex] = character;
+							pages[activePage] = page;
+
+							this.setState({
+								pages
+							});
+						}
+					})
+					.catch(response => {
+						console.log('error', response)
+					})
+				;
+			});
+
+			species.forEach((speciesUrl, indexSpecies) => {
+				getAPIResource(speciesUrl)
+					.then(response => {
+						character.species.push(response.data);
+
+						if (indexSpecies + 1 == species.length) {
+							page = pages[activePage];
+							page[characterIndex] = character;
+							pages[activePage] = page;
+
+							this.setState({
+								pages
+							});
+						}
+					})
+					.catch(response => {
+						console.log('error', response)
+					});
+				;
+			});
+
+			starships.forEach((starshipsUrl, indexStarships) => {
+				getAPIResource(starshipsUrl)
+					.then(response => {
+						character.starships.push(response.data);
+
+						if (indexStarships + 1 == starships.length) {
+							page = pages[activePage];
+							page[characterIndex] = character;
+							pages[activePage] = page;
+
+							this.setState({
+								pages
+							});
+						}
+					})
+					.catch(response => {
+						console.log('error', response)
+					});
+				;
+			});
+
+			vehicles.forEach((vehiclesUrl, indexVehicles) => {
+				getAPIResource(vehiclesUrl)
+					.then(response => {
+						character.vehicles.push(response.data);
+
+						if (indexVehicles + 1 == vehicles.length) {
+							page = pages[activePage];
+							page[characterIndex] = character;
+							pages[activePage] = page;
+
+							this.setState({
+								pages
+							});
+						}
+					})
+					.catch(response => {
+						console.log('error', response)
+					});
+				;
+			});
+		}
+
+		/**
+		 * @description Load images from activePage and next and before, validating if it's not
+		 *				already loaded.
+		 *
+		 * @param {int} pageNumber Page to load info
+		 */
+		loadPageInfo(pageNumber) {
+			const { pages } = this.state;
+			const { getAPIResource } = Services;
+
+			pages[pageNumber].forEach((character, indexCharacter) => {
+				let isCharacterImageLoaded = false;
+
+				if (!character.imageUrl) {
+					character.imageUrl = 'teste';
+
+					pages[pageNumber][indexCharacter] = character;
+
+					if (indexCharacter + 1 == pages[pageNumber].length) {
+						this.setState({
+							pages
+						});
+					}
+				}
+
+			});
+
+			if (this.hasNextPage() && this.state.activePage + 1 == pageNumber + 1) {
+				this.loadPageInfo(this.state.activePage + 1);
+			}
+
+			if (this.hasPreviousPage() && this.state.activePage - 1 == pageNumber - 1) {
+				this.loadPageInfo(this.state.activePage - 1);
+			}
+		}
+
+		loadPeoplesFromAPI() {
+			const { getAPIResource } = Services;
+
+			const loadPeoplesPage = (url) => {
+				let currentPage = 1;
+
+				getAPIResource(url)
+					.then(response => {
+						const { data } = response;
+						const { next, results } = data;
+
+						const peoples = this.state.apiPeople.concat(results);
+
+						this.setState({
+							apiPeople: peoples
+						});
+
+						if (next) {
+							loadPeoplesPage(next);
+						} else {
+							let allPeople = this.state.apiPeople;
+							this.createPages(allPeople, this.state.hash);
+						}
+					})
+					.catch(response => {
+						console.log('error', response)
+					})
+			}
+
+			loadPeoplesPage('https://swapi.co/api/people/?page=1');
+		}
+
+		startGame() {
+			console.log('startGame');
+		}
+
 		closeHintModal(id) {
-			const { activePage, gamePages } = this.state;
+			const { activePage, pages } = this.state;
 
-			let page = gamePages[activePage];
+			let page = pages[activePage];
 
-			page.itens.map(item => {
+			page.map(item => {
 				if (item.url == id) {
 					item.openedModal = false;
 				}
@@ -357,10 +399,10 @@ const Container = (Component) => (
 				return item
 			});
 
-			gamePages[activePage] = page;
+			pages[activePage] = page;
 
 			this.setState({
-				gamePages
+				pages
 			});
 		}
 
@@ -369,7 +411,7 @@ const Container = (Component) => (
 			let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
 			let i;
-			for (i = 0; i < 5; i++) {
+			for (i = 0; i < 50; i++) {
 				text += possible.charAt(Math.floor(Math.random() * possible.length));
 			}
 
@@ -377,15 +419,13 @@ const Container = (Component) => (
 		}
 
 		getItensFromPage(page) {
-			const { gamePages } = this.state;
+			const { pages } = this.state;
 
-			return gamePages[page].itens
+			return pages[page]
 		}
 
 		getPages() {
-			const { gamePages } = this.state;
-
-			const pages = Object.keys(gamePages).map(page => parseInt(page)).sort();
+			const pages = Object.keys(this.state.pages).map(page => parseInt(page)).sort();
 
 			return pages
 		}
@@ -393,7 +433,7 @@ const Container = (Component) => (
 		goToNextPage() {
 			const { activePage } = this.state;
 
-			if (this.hasNextPage) {
+			if (this.hasNextPage()) {
 				this.setState({
 					activePage: activePage + 1
 				});
@@ -403,7 +443,7 @@ const Container = (Component) => (
 		goToPreviousPage() {
 			const { activePage } = this.state;
 
-			if (this.hasPreviousPage) {
+			if (this.hasPreviousPage()) {
 				this.setState({
 					activePage: activePage - 1
 				});
@@ -433,11 +473,11 @@ const Container = (Component) => (
 		}
 
 		openHintModal(id) {
-			const { activePage, gamePages } = this.state;
+			const { activePage, pages } = this.state;
 
-			let page = gamePages[activePage];
+			let page = pages[activePage];
 
-			page.itens.map(item => {
+			page.map(item => {
 				if (item.url == id) {
 					item.openedModal = true;
 					item.hasUsedHint = true;
@@ -448,10 +488,10 @@ const Container = (Component) => (
 				return item
 			});
 
-			gamePages[activePage] = page;
+			pages[activePage] = page;
 
 			this.setState({
-				gamePages
+				pages
 			});
 		}
 
