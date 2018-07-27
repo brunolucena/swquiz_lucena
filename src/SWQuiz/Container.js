@@ -552,8 +552,6 @@ const Container = (Component) => (
 				return new Date(date.getTime() + minutes * 60000);
 			};
 
-			console.log('sartGame()');
-
 			if (!this.state.dateTimeStart) {
 				this.setState({
 					dateTimeLimit: addMinutes(new Date(), this.props.timeLimit / 60),
