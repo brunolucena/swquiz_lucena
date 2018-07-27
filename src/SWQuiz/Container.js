@@ -505,6 +505,8 @@ const Container = (Component) => (
 
 			let page = pages[activePage];
 
+			this.loadCharacterInfo(id);
+
 			page.map(item => {
 				if (item.url == id) {
 					item.openedModal = true;
@@ -535,7 +537,7 @@ const Container = (Component) => (
 
 			this.setState({
 				dateTimeStart: now,
-				dateTimeLimit: addMinutes(now, this.state.timeLimit / 60)
+				dateTimeLimit: addMinutes(now, this.props.timeLimit / 60)
 			});
 		}
 
