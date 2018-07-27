@@ -10,7 +10,10 @@ import styles from './styles.scss';
 
 
 const SWQuiz = (props) => {
-	const { closeHintModal, dateTimeEnded, dateTimeLimit, dateTimeStart, isGameFinished, itens, openHintModal } = props;
+	const { closeHintModal, dateTimeEnded, dateTimeLimit, dateTimeStart, isGameFinished, itens, itensPerPage, openHintModal } = props;
+
+	const array = Array(itensPerPage).fill(0);
+
 	return (
 		<div className={styles.swquizWrapper}>
 			<div className={styles.top}>
@@ -31,16 +34,18 @@ const SWQuiz = (props) => {
 								{...item}
 								closeHintModal={closeHintModal}
 								id={item.url}
-								imageUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Star_Wars_Logo.svg/2000px-Star_Wars_Logo.svg.png"
 								isPlaceholder={isGameFinished || !dateTimeStart}
 								key={item.url}
 								openHintModal={openHintModal}
 							/>
 						))
 					:
-						<div className={styles.emptyItens}>
-							Empty itens
-						</div>
+						array.map((number, i) => (
+							<QuizItem
+								key={i}
+								isPlaceholder={true}
+							/>
+						))
 				}
 			</div>
 
