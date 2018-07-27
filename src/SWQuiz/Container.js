@@ -69,6 +69,7 @@ const Container = (Component) => (
 			this.closeHintModal = this.closeHintModal.bind(this);
 			this.getItensFromPage = this.getItensFromPage.bind(this);
 			this.openHintModal = this.openHintModal.bind(this);
+			this.startGame = this.startGame.bind(this);
 		}
 
 		componentDidMount() {
@@ -534,7 +535,7 @@ const Container = (Component) => (
 
 			this.setState({
 				dateTimeStart: now,
-				dateTimeLimit: addMinutes(now, timeLimit / 60)
+				dateTimeLimit: addMinutes(now, this.state.timeLimit / 60)
 			});
 		}
 
