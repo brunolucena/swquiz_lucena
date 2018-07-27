@@ -2,6 +2,7 @@ import React from 'react';
 
 import Dialog from '@material-ui/core/Dialog';
 
+import GameLoading from '../GameLoading';
 import Logo from '../Logo';
 import Pagination from '../Pagination';
 import QuizItem from '../QuizItem';
@@ -12,7 +13,7 @@ import styles from './styles.scss';
 
 
 const SWQuiz = (props) => {
-	const { closeHintModal, dateTimeEnded, dateTimeLimit, dateTimeStart, isGameFinished, itens, itensPerPage, openHintModal } = props;
+	const { closeHintModal, dateTimeEnded, dateTimeLimit, dateTimeStart, isGameFinished, isGameReady, itens, itensPerPage, openHintModal, startGame } = props;
 
 	const array = Array(itensPerPage).fill(0);
 
@@ -56,7 +57,7 @@ const SWQuiz = (props) => {
 			</div>
 
 			<Dialog open={!dateTimeStart} aria-labelledby="simple-dialog-title">
-				Loading Data
+				<GameLoading isReadyToStart={isGameReady} startGame={startGame}/>
 			</Dialog>
 		</div>
 	);
