@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Dialog from '@material-ui/core/Dialog';
+
 import Logo from '../Logo';
 import Pagination from '../Pagination';
 import QuizItem from '../QuizItem';
@@ -52,6 +54,10 @@ const SWQuiz = (props) => {
 			<div className={styles.pagination}>
 				<Pagination />
 			</div>
+
+			<Dialog open={!dateTimeStart} aria-labelledby="simple-dialog-title">
+				Loading Data
+			</Dialog>
 		</div>
 	);
 }

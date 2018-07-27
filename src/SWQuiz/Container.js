@@ -75,32 +75,19 @@ const Container = (Component) => (
 			const { activePage, apiPeople, hash } = this.state;
 			const { getAPIResource } = Services;
 
-			this.loadPeoplesFromAPI();
-
-			// TODO get all pages from api, store it on a temporary var and then create pages
-			// if there is a game on storage, create pages with that info
-			// else create pages randomly
-
-			if (hash) {
-				console.log('has hash');
-			} else {
-				console.log('has no hash');
-				this.setState({
-					hash: this.createHash()
-				});
-			}
+			this.loadInitialGameData();
 		}
 
 		/**
 		 * @description Create pages from peoples array. Saves the data both on component and localStorage.
-		 *				At localStorage, saves only the url to the char, so the localStorage does not have the
+		 *				At localStorage, saves only the url of the char, so the localStorage does not have the
 		 *				actual answers for the Quiz.
 		 *
 		 *				When loading the data, if it's loading an already existing game, keeps the same pages
 		 *				from the game saved on localStorage, so the chars will always appear at the same order.
 		 *				When creating a new game, will create pages in a random char order.
 		 *
-		 *				After the pages are loaded, it loads the info of first two pages.
+		 *				After pages are loaded, it loads the info (image) of activePage, next page and previous page.
 		 *
 		 * @param {Array} peoples List of peoples from API.
 		 * @param {string} gameHash (?) optional. Hash of an already existing game on localStorage.
@@ -127,19 +114,13 @@ const Container = (Component) => (
 					}
 
 					page.forEach((character, indexCharacters) => {
-						getAPIResource(character.url)
-							.then(response => {
-								console.log('getAPIResource character', response);
+						character = peoples.find(people => people.url == character.url);
 
-								pages[pageNumber].push(response.data);
+						pages[pageNumber].push(character);
 
-								if (indexPages + 1 == keys.length) {
-									this.fetchPagesInfo();
-								}
-							})
-							.catch(response => {
-								console.log('getAPIResource character error', response)
-							})
+						if (indexPages + 1 == keys.length) {
+							this.loadPageInfo(this.state.activePage);
+						}
 					});
 				});
 			} else {
@@ -186,6 +167,130 @@ const Container = (Component) => (
 					this.loadPageInfo(this.state.activePage);
 				});
 			}
+		}
+
+		/**
+		 * @description Closes the hint modal of a specific character.
+		 *
+		 * @param {number} id Character id. Since the API doesn't returns this info, it uses the url, which is unique.
+		 */
+		closeHintModal(id) {
+			const { activePage, pages } = this.state;
+
+			let page = pages[activePage];
+
+			page.map(item => {
+				if (item.url == id) {
+					item.openedModal = false;
+				}
+
+				return item
+			});
+
+			pages[activePage] = page;
+
+			this.setState({
+				pages
+			});
+		}
+
+		/**
+		 * @description Create a hash to store a game.
+		 *
+		 * @returns {string} Hash
+		 */
+		createHash() {
+			let text = "";
+			let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+			let i;
+			for (i = 0; i < 50; i++) {
+				text += possible.charAt(Math.floor(Math.random() * possible.length));
+			}
+
+			return text;
+		}
+
+		/**
+		 * @description Get all characters from a specific page.
+		 *
+		 * @param {number} page Page number
+		 *
+		 * @returns {Array} Array of characters
+		 */
+		getItensFromPage(page) {
+			const { pages } = this.state;
+
+			return pages[page]
+		}
+
+		/**
+		 * @description Get all available pages on the game.
+		 *
+		 * @returns {Array} Array of ints sorted.
+		 */
+		getPages() {
+			const pages = Object.keys(this.state.pages).map(page => parseInt(page)).sort();
+
+			return pages
+		}
+
+		/**
+		 * @description Go to next page if available.
+		 */
+		goToNextPage() {
+			const { activePage } = this.state;
+
+			if (this.hasNextPage()) {
+				this.setState({
+					activePage: activePage + 1
+				});
+			}
+		}
+
+		/**
+		 * @description Go to previous page if available.
+		 */
+		goToPreviousPage() {
+			const { activePage } = this.state;
+
+			if (this.hasPreviousPage()) {
+				this.setState({
+					activePage: activePage - 1
+				});
+			}
+		}
+
+		/**
+		 * @description Checks if there is a next page.
+		 *
+		 * @returns {bool}
+		 */
+		hasNextPage() {
+			const { activePage } = this.state;
+
+			const pages = this.getPages();
+			const index = pages.findIndex(p => p == activePage);
+
+			const remainingPages = pages.splice(index + 1, pages.length);
+
+			return remainingPages.length > 0
+		}
+
+		/**
+		 * @description Checks if there is a previous page.
+		 *
+		 * @returns {bool}
+		 */
+		hasPreviousPage() {
+			const { activePage } = this.state;
+
+			const pages = this.getPages();
+			const index = pages.findIndex(p => p == activePage);
+
+			const remainingPages = pages.splice(index, pages.length);
+
+			return pages.length > 0
 		}
 
 		/**
@@ -315,42 +420,12 @@ const Container = (Component) => (
 		}
 
 		/**
-		 * @description Load images from activePage and next and before, validating if it's not
-		 *				already loaded.
-		 *
-		 * @param {int} pageNumber Page to load info
+		 * @description Load game data to start game.
+		 *				The game is considered as ready when it has all the pages characters loaded,
+		 *				and the images from the activePage loaded.
+		 *				The next and previous page also loads if available.
 		 */
-		loadPageInfo(pageNumber) {
-			const { pages } = this.state;
-			const { getAPIResource } = Services;
-
-			pages[pageNumber].forEach((character, indexCharacter) => {
-				let isCharacterImageLoaded = false;
-
-				if (!character.imageUrl) {
-					character.imageUrl = 'teste';
-
-					pages[pageNumber][indexCharacter] = character;
-
-					if (indexCharacter + 1 == pages[pageNumber].length) {
-						this.setState({
-							pages
-						});
-					}
-				}
-
-			});
-
-			if (this.hasNextPage() && this.state.activePage + 1 == pageNumber + 1) {
-				this.loadPageInfo(this.state.activePage + 1);
-			}
-
-			if (this.hasPreviousPage() && this.state.activePage - 1 == pageNumber - 1) {
-				this.loadPageInfo(this.state.activePage - 1);
-			}
-		}
-
-		loadPeoplesFromAPI() {
+		loadInitialGameData() {
 			const { getAPIResource } = Services;
 
 			const loadPeoplesPage = (url) => {
@@ -382,96 +457,48 @@ const Container = (Component) => (
 			loadPeoplesPage('https://swapi.co/api/people/?page=1');
 		}
 
-		startGame() {
-			console.log('startGame');
-		}
+		/**
+		 * @description Load images from: activePage, next page and page before.
+		 *				already loaded.
+		 *
+		 * @param {int} pageNumber Page to load info.
+		 */
+		loadPageInfo(pageNumber) {
+			const { pages } = this.state;
+			const { getAPIResource } = Services;
 
-		closeHintModal(id) {
-			const { activePage, pages } = this.state;
+			pages[pageNumber].forEach((character, indexCharacter) => {
+				let isCharacterImageLoaded = false;
 
-			let page = pages[activePage];
+				if (!character.imageUrl) {
+					character.imageUrl = 'teste';
 
-			page.map(item => {
-				if (item.url == id) {
-					item.openedModal = false;
+					pages[pageNumber][indexCharacter] = character;
+
+					if (indexCharacter + 1 == pages[pageNumber].length) {
+						this.setState({
+							isGameReady: true,
+							pages
+						});
+					}
 				}
 
-				return item
 			});
 
-			pages[activePage] = page;
-
-			this.setState({
-				pages
-			});
-		}
-
-		createHash() {
-			let text = "";
-			let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-			let i;
-			for (i = 0; i < 50; i++) {
-				text += possible.charAt(Math.floor(Math.random() * possible.length));
+			if (this.hasNextPage() && this.state.activePage + 1 == pageNumber + 1) {
+				this.loadPageInfo(this.state.activePage + 1);
 			}
 
-			return text;
-		}
-
-		getItensFromPage(page) {
-			const { pages } = this.state;
-
-			return pages[page]
-		}
-
-		getPages() {
-			const pages = Object.keys(this.state.pages).map(page => parseInt(page)).sort();
-
-			return pages
-		}
-
-		goToNextPage() {
-			const { activePage } = this.state;
-
-			if (this.hasNextPage()) {
-				this.setState({
-					activePage: activePage + 1
-				});
+			if (this.hasPreviousPage() && this.state.activePage - 1 == pageNumber - 1) {
+				this.loadPageInfo(this.state.activePage - 1);
 			}
 		}
 
-		goToPreviousPage() {
-			const { activePage } = this.state;
-
-			if (this.hasPreviousPage()) {
-				this.setState({
-					activePage: activePage - 1
-				});
-			}
-		}
-
-		hasNextPage() {
-			const { activePage } = this.state;
-
-			const pages = this.getPages();
-			const index = pages.findIndex(p => p == activePage);
-
-			const remainingPages = pages.splice(index + 1, pages.length);
-
-			return remainingPages.length > 0
-		}
-
-		hasPreviousPage() {
-			const { activePage } = this.state;
-
-			const pages = this.getPages();
-			const index = pages.findIndex(p => p == activePage);
-
-			const remainingPages = pages.splice(index, pages.length);
-
-			return pages.length > 0
-		}
-
+		/**
+		 * @description Opens the hint modal of a specific character.
+		 *
+		 * @param {number} id Character id. Since the API doesn't returns this info, it uses the url, which is unique.
+		 */
 		openHintModal(id) {
 			const { activePage, pages } = this.state;
 
@@ -495,14 +522,20 @@ const Container = (Component) => (
 			});
 		}
 
+		/**
+		 * @description Start a game by setting it's dateTimeStart and the dateTimeLimit, considering the timeLimit.
+		 */
 		startGame() {
-			// TODO
-			// Carregas todas as paginas da API em uma variavel temporaria
-			// Distribuir os itens em paginas de acordo com {itensPerPage}
-			// Para cada item, adicionar uma flag {openedModal: false}, um {id} igual a {item.url} e uma flag {isReady: false}
-			// Adicionar para as duas primeiras paginas um href em {imageUrl} de acordo com uma API apropriada
-			// e substituir os enderecos da API por seus respectivos valores de: films, species, vehicles, starships e
-			// homeworld. Apos carregas essas informacoes, trocar flag {isReady} para true
+			const addMinutes = (date, minutes) => {
+				return new Date(date.getTime() + minutes * 60000);
+			};
+
+			const now = new Date();
+
+			this.setState({
+				dateTimeStart: now,
+				dateTimeLimit: addMinutes(now, timeLimit / 60)
+			});
 		}
 
 		render() {
@@ -513,6 +546,7 @@ const Container = (Component) => (
 					closeHintModal={this.closeHintModal}
 					itens={this.getItensFromPage(this.state.activePage)}
 					openHintModal={this.openHintModal}
+					startGame={this.startGame}
 				/>
 			)
 		}
