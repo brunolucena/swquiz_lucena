@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 import Helpers from './Helpers';
 import Services from './Services';
@@ -42,7 +43,7 @@ const Container = (Component) => (
 			itensPerPage: 10,
 			pointsForFullAnswer: 10,
 			pointsForAnswerWithHints: 5,
-			timeLimit: 120
+			timeLimit: 5
 		};
 
 		constructor(props) {
@@ -66,10 +67,13 @@ const Container = (Component) => (
 				score: 0 // Player final score.
 			};
 
+			this.gameCounter = this.gameCounter.bind(this);
 			this.closeHintModal = this.closeHintModal.bind(this);
 			this.getItensFromPage = this.getItensFromPage.bind(this);
 			this.openHintModal = this.openHintModal.bind(this);
 			this.startGame = this.startGame.bind(this);
+
+			this.interval = setInterval(this.gameCounter, 1000);
 		}
 
 		componentDidMount() {
@@ -210,6 +214,21 @@ const Container = (Component) => (
 			}
 
 			return text;
+		}
+
+		gameCounter() {
+			const { dateTimeLimit } = this.state;
+
+			const secondsRemaining = moment().diff(dateTimeLimit, 'seconds') * -1;
+
+			if (secondsRemaining < 1) {
+				clearInterval(this.interval);
+
+				this.setState({
+					dateTimeEnded: new Date(),
+					isGameFinished: true
+				});
+			}
 		}
 
 		/**
@@ -533,12 +552,14 @@ const Container = (Component) => (
 				return new Date(date.getTime() + minutes * 60000);
 			};
 
-			const now = new Date();
+			console.log('sartGame()');
 
-			this.setState({
-				dateTimeStart: now,
-				dateTimeLimit: addMinutes(now, this.props.timeLimit / 60)
-			});
+			if (!this.state.dateTimeStart) {
+				this.setState({
+					dateTimeLimit: addMinutes(new Date(), this.props.timeLimit / 60),
+					dateTimeStart: new Date()
+				});
+			}
 		}
 
 		render() {
