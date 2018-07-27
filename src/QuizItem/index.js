@@ -44,7 +44,7 @@ const QuizItem = (props) => {
 							</button>,
 
 							<Dialog key="dialog" open={openedModal} onClose={() => { closeHintModal(id) }} aria-labelledby="simple-dialog-title">
-								<CharInfo data={{...props}} />
+								<CharInfo {...props} />
 							</Dialog>
 						]
 					:
