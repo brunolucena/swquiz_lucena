@@ -61,8 +61,6 @@ const Container = (Component) => (
 				playerNameGuess: ''
 			};
 
-			console.log('QuizItem props', props);
-
 			this.handleInputChange = this.handleInputChange.bind(this);
 		}
 
