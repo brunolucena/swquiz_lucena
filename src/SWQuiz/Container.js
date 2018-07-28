@@ -84,10 +84,12 @@ const Container = (Component) => (
 			if (params.hash) {
 				this.setState({
 					hash: params.hash
+				}, () => {
+					this.loadInitialGameData();
 				});
+			} else {
+				this.loadInitialGameData();
 			}
-
-			this.loadInitialGameData();
 		}
 
 		/**
@@ -115,25 +117,32 @@ const Container = (Component) => (
 			let pages = {};
 
 			if (game) {
-				let keys = Object.keys(game.pages);
+				this.setState({
+					dateTimeEnded: new Date(game.dateTimeEnded),
+					dateTimeLimit: new Date(game.dateTimeLimit),
+					dateTimeStart: new Date(game.dateTimeStart)
+				}, () => {
+					const secondsRemaining = moment().diff(this.state.dateTimeLimit, 'seconds') * -1;
 
-				keys.forEach((pageNumber, indexPages) => {
-					let page = game.pages[pageNumber];
-					game.pages[pageNumber] = [];
+					debugger;
 
-					if (!pages[pageNumber]) {
-						pages[pageNumber] = [];
-					}
+					if (secondsRemaining > 1) {
+						Object.keys(game.pages).forEach(pageNumber => {
+							const page = game.pages[pageNumber].map(({url}) => (
+								peoples.find(people => people.url == url)
+							));
 
-					page.forEach((character, indexCharacters) => {
-						character = peoples.find(people => people.url == character.url);
+							pages[pageNumber] = page;
+						});
 
-						pages[pageNumber].push(character);
-
-						if (indexPages + 1 == keys.length) {
+						this.setState({
+							pages
+						}, () => {
 							this.loadPageInfo(this.state.activePage);
-						}
-					});
+						});
+					} else {
+						this.gameCounter();
+					}
 				});
 			} else {
 				const hash = this.createHash();
@@ -503,7 +512,17 @@ const Container = (Component) => (
 		 *				The next and previous page also loads if available.
 		 */
 		loadInitialGameData() {
+			const { hash } = this.state;
 			const { getAPIResource } = SWApi;
+			const { getGame } = LocalStorageHelpers;
+
+			let game = getGame(hash);
+
+			debugger
+
+			if (hash && !game) {
+				this.props.history.push('/swquiz')
+			}
 
 			const loadPeoplesPage = (url) => {
 				let currentPage = 1;
@@ -524,7 +543,7 @@ const Container = (Component) => (
 						} else {
 							let allPeople = this.state.apiPeople;
 
-							this.createPages(allPeople, this.state.hash);
+							this.createPages(allPeople, hash);
 						}
 					})
 					.catch(response => {
@@ -537,7 +556,6 @@ const Container = (Component) => (
 
 		/**
 		 * @description Load images from: activePage, next page and page before.
-		 *				already loaded.
 		 *
 		 * @param {int} pageNumber Page to load info.
 		 */

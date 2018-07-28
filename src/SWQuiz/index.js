@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 import Dialog from '@material-ui/core/Dialog';
 
@@ -82,4 +83,4 @@ const SWQuiz = (props) => {
 	);
 }
 
-export default Container(SWQuiz);
+export default withRouter(Container(SWQuiz));
