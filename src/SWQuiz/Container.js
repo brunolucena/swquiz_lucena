@@ -55,11 +55,11 @@ const Container = (Component) => (
 				dateTimeEnded: '', // DateTime that the game was concluded.
 				dateTimeLimit: '', // DateTime limit to finish the game (dateTimeStart + timeLimit).
 				dateTimeStart: '', // DateTime when the game started.
-				email: null, // Player email.
+				email: '', // Player email.
 				hash: props.hash, // Unique hash
 				isGameFinished: false, // Game has been finished and player has put it's name and email.
 				isGameReady: false, // Game is ready to start.
-				name: null, // Player name.
+				name: '', // Player name.
 				pages: [], // Pages to show at the game. Each page is an attribute as the page and the value as an array that expect to have {props.itensPerPage} length.
 				score: null // Player final score.
 			};
@@ -71,6 +71,7 @@ const Container = (Component) => (
 			this.goToPreviousPage = this.goToPreviousPage.bind(this);
 			this.handleItemGuessInputChange = this.handleItemGuessInputChange.bind(this);
 			this.openHintModal = this.openHintModal.bind(this);
+			this.saveGameData = this.saveGameData.bind(this);
 			this.startGame = this.startGame.bind(this);
 
 			this.interval = setInterval(this.gameCounter, 1000);
@@ -151,7 +152,7 @@ const Container = (Component) => (
 
 			let gameScore = 0;
 
-			answer.forEach(answer => {
+			answers.forEach(answer => {
 				const expected = apiPeople.find(people => people.url == answer.url).name;
 				const actual = answer.text;
 
@@ -188,7 +189,7 @@ const Container = (Component) => (
 			let game = getGame(gameHash);
 			let pages = {};
 
-			if (hash && !game) {
+			if (gameHash && !game) {
 				this.props.history.push('/swquiz')
 			}
 
@@ -224,10 +225,10 @@ const Container = (Component) => (
 				const hash = this.createHash();
 
 				game = {
-					email: null,
+					email: '',
 					hash,
 					isGameFinished: false,
-					name: null,
+					name: '',
 					pages: {},
 					score: null
 				};
@@ -710,22 +711,40 @@ const Container = (Component) => (
 		}
 
 		/**
+		 * @description Saves game data.
+		 *
+		 * @param {object} data Object containing data to be saved.
+		 */
+		saveGameData(data) {
+			const { hash } = this.state;
+			const { setGameData } = LocalStorageHelpers;
+
+			Object.keys(data).forEach(attribute => {
+				const value = data[attribute];
+
+				setGameData(hash, attribute, value);
+			});
+		}
+
+		/**
 		 * @description Start a game by setting it's dateTimeStart and dateTimeLimit, considering this.props.timeLimit.
 		 */
 		startGame() {
+			const { dateTimeStart, hash } = this.state;
+			const { timeLimit } = this.props;
 			const { setGameData } = LocalStorageHelpers;
 
 			const addMinutes = (date, minutes) => {
 				return new Date(date.getTime() + minutes * 60000);
 			};
 
-			if (!this.state.dateTimeStart) {
+			if (!dateTimeStart) {
 				this.setState({
-					dateTimeLimit: addMinutes(new Date(), this.props.timeLimit / 60),
+					dateTimeLimit: addMinutes(new Date(), timeLimit / 60),
 					dateTimeStart: new Date()
 				}, () => {
-					setGameData(this.state.hash, 'dateTimeLimit', this.state.dateTimeLimit);
-					setGameData(this.state.hash, 'dateTimeStart', this.state.dateTimeStart);
+					setGameData(hash, 'dateTimeLimit', this.state.dateTimeLimit);
+					setGameData(hash, 'dateTimeStart', this.state.dateTimeStart);
 				});
 			}
 		}
@@ -744,6 +763,7 @@ const Container = (Component) => (
 					isExpired={this.isExpired()}
 					itens={this.getItensFromPage(this.state.activePage)}
 					openHintModal={this.openHintModal}
+					saveGameData={this.saveGameData}
 					startGame={this.startGame}
 				/>
 			)
