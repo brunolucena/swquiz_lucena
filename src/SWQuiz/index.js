@@ -65,12 +65,15 @@ const SWQuiz = (props) => {
 				}
 			</div>
 
-			<Pagination
-				goToNextPage={goToNextPage}
-				goToPreviousPage={goToPreviousPage}
-				hasNext={hasNext}
-				hasPrevious={hasPrevious}
-			/>
+			{
+				!isGameFinished &&
+					<Pagination
+						goToNextPage={goToNextPage}
+						goToPreviousPage={goToPreviousPage}
+						hasNext={hasNext}
+						hasPrevious={hasPrevious}
+					/>
+			}
 
 			<Dialog open={!dateTimeStart} aria-labelledby="simple-dialog-title">
 				<GameLoading isReadyToStart={isGameReady} startGame={startGame}/>

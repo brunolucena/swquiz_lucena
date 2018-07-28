@@ -63,7 +63,6 @@ const Container = (Component) => (
 				isGameReady: false, // Game is ready to start.
 				name: '', // Player name.
 				pages: [], // Pages to show at the game. Each page is an attribute as the page and the value as an array that expect to have {props.itensPerPage} length.
-				pagesLoadedFromAPI: [], // Pages that were loaded from the API. Ex: [1, 4, 7].
 				score: 0 // Player final score.
 			};
 
