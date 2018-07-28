@@ -1,10 +1,59 @@
+@import '../shared-styles/buttons';
 @import '../shared-styles/variables';
 
 .gameResultWrapper {
 	display: flex;
 	flex-flow: column;
-	align-items: center;
-	justify-content: center;
+	align-items: flex-start;
+	justify-content: flex-start;
 	min-height: 300px;
 	width: 500px;
+	padding: 1rem;
+	color: $text-color;
+}
+
+.top {
+	font-size: 2rem;
+}
+
+.gameData {
+	width: 100%;
+	padding: 1rem 0;
+
+	.info {
+		margin-top: 2rem;
+	}
+
+	.score {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		margin: 1rem 0;
+		font-size: 1.2rem;
+
+		> span {
+			font-size: 2rem;
+			margin-right: 0.5rem;
+		}
+	}
+
+	.text {
+		display: flex;
+		justify-content: center;
+		margin-top: 2rem;
+	}
+
+	.inputsContainer {
+		display: flex;
+		flex-flow: column;
+
+		> div {
+			margin-bottom: 0.5rem;
+		}
+	}
+
+	.button {
+		margin: 1rem auto 0;
+	}
 }
