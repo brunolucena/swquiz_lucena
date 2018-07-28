@@ -726,6 +726,10 @@ const Container = (Component) => (
 				const value = data[attribute];
 
 				setGameData(hash, attribute, value);
+
+				this.setState({
+					[attribute]: value
+				});
 			});
 		}
 
