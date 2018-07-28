@@ -18,10 +18,10 @@ const Container = (Component) => (
 			this.state = {};
 
 			this.data = props.data.sort((a, b) => {
-				if (a.score < b.score) {
+				if (a.score > b.score) {
 					return -1;
 				}
-				if (a.score > b.score) {
+				if (a.score < b.score) {
 					return 1
 				}
 				return 0
@@ -29,7 +29,7 @@ const Container = (Component) => (
 		}
 
 		render() {
-			return <Component {...this.props} {...this.state} />
+			return <Component {...this.props} {...this.state} games={this.data} />
 		}
 	}
 )
