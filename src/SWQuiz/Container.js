@@ -152,15 +152,17 @@ const Container = (Component) => (
 
 			let gameScore = 0;
 
-			answers.forEach(answer => {
-				const expected = apiPeople.find(people => people.url == answer.url).name;
-				const actual = answer.text;
+			if (answers) {
+				answers.forEach(answer => {
+					const expected = apiPeople.find(people => people.url == answer.url).name;
+					const actual = answer.text;
 
-				const matchScore = computeMatchScore(expected, actual);
-				const answerScore = computeAnswerScore(matchScore, pointsForFullAnswer, answer.hasUsedHint);
+					const matchScore = computeMatchScore(expected, actual);
+					const answerScore = computeAnswerScore(matchScore, pointsForFullAnswer, answer.hasUsedHint);
 
-				gameScore += answerScore;
-			});
+					gameScore += answerScore;
+				});
+			}
 
 			return gameScore
 		}
