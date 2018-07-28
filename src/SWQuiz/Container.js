@@ -124,8 +124,6 @@ const Container = (Component) => (
 				}, () => {
 					const secondsRemaining = moment().diff(this.state.dateTimeLimit, 'seconds') * -1;
 
-					debugger;
-
 					if (secondsRemaining > 1) {
 						Object.keys(game.pages).forEach(pageNumber => {
 							const page = game.pages[pageNumber].map(({url}) => (
@@ -517,8 +515,6 @@ const Container = (Component) => (
 			const { getGame } = LocalStorageHelpers;
 
 			let game = getGame(hash);
-
-			debugger
 
 			if (hash && !game) {
 				this.props.history.push('/swquiz')

@@ -27,7 +27,7 @@ const getLastPendingGame = () => {
 const getPendingGames = () => {
 	let games = getGames();
 
-	return games.filter(game => !game.isGameFinished)
+	return games.filter(game => !game.isGameFinished && game.dateTimeStart && game.dateTimeLimit)
 }
 
 const setAnswer = (gameHash, answer) => {
