@@ -184,20 +184,10 @@ const Container = (Component) => (
 			const { answers, hash } = this.state;
 			const { setGameData } = Helpers;
 
-			const answerIndex = answers.find(a => a.url == id);
-			let answer;
-
-			if (answerIndex > -1) {
-				 answer = answers[answerIndex];
-
-			} else {
-				answer = {
-					url: id
-				}
-			}
+			const answerIndex = answers.findIndex(a => a.url == id);
+			const answer = answers[answerIndex];
 
 			answer.openedModal = false;
-
 			answers[answerIndex] = answer;
 
 			this.setState({
@@ -383,106 +373,121 @@ const Container = (Component) => (
 			character.starships = [];
 			character.vehicles = [];
 
-			getAPIResource(homeworld)
-				.then(response => {
-					character.homeworld = response.data;
+			if (!character.isHomeworldLoaded) {
+				getAPIResource(homeworld)
+					.then(response => {
+						character.homeworld = response.data;
+						character.isHomeworldLoaded = true;
 
-					page = pages[activePage];
-					page[characterIndex] = character;
-					pages[activePage] = page;
+						page = pages[activePage];
+						page[characterIndex] = character;
+						pages[activePage] = page;
 
-					this.setState({
-						pages
+						this.setState({
+							pages
+						});
+					})
+					.catch(response => {
+						console.log('error', response)
 					});
-				})
-				.catch(response => {
-					console.log('error', response)
+				;
+			}
+
+			if (!character.isFilmsLoaded) {
+				films.forEach((filmUrl, indexFilms) => {
+					getAPIResource(filmUrl)
+						.then(response => {
+							character.films.push(response.data);
+
+							if (indexFilms + 1 == films.length) {
+								character.isFilmsLoaded = true;
+								page = pages[activePage];
+								page[characterIndex] = character;
+								pages[activePage] = page;
+
+								this.setState({
+									pages
+								});
+							}
+						})
+						.catch(response => {
+							console.log('error', response)
+						})
+					;
 				});
-			;
+			}
 
-			films.forEach((filmUrl, indexFilms) => {
-				getAPIResource(filmUrl)
-					.then(response => {
-						character.films.push(response.data);
+			if (!character.isSpeciesLoaded) {
+				species.forEach((speciesUrl, indexSpecies) => {
+					getAPIResource(speciesUrl)
+						.then(response => {
+							character.species.push(response.data);
 
-						if (indexFilms + 1 == films.length) {
-							page = pages[activePage];
-							page[characterIndex] = character;
-							pages[activePage] = page;
+							if (indexSpecies + 1 == species.length) {
+								character.isSpeciesLoaded = true;
+								page = pages[activePage];
+								page[characterIndex] = character;
+								pages[activePage] = page;
 
-							this.setState({
-								pages
-							});
-						}
-					})
-					.catch(response => {
-						console.log('error', response)
-					})
-				;
-			});
+								this.setState({
+									pages
+								});
+							}
+						})
+						.catch(response => {
+							console.log('error', response)
+						});
+					;
+				});
+			}
 
-			species.forEach((speciesUrl, indexSpecies) => {
-				getAPIResource(speciesUrl)
-					.then(response => {
-						character.species.push(response.data);
+			if (!character.isStarshipsLoaded) {
+				starships.forEach((starshipsUrl, indexStarships) => {
+					getAPIResource(starshipsUrl)
+						.then(response => {
+							character.starships.push(response.data);
 
-						if (indexSpecies + 1 == species.length) {
-							page = pages[activePage];
-							page[characterIndex] = character;
-							pages[activePage] = page;
+							if (indexStarships + 1 == starships.length) {
+								character.isStarshipsLoaded = true;
+								page = pages[activePage];
+								page[characterIndex] = character;
+								pages[activePage] = page;
 
-							this.setState({
-								pages
-							});
-						}
-					})
-					.catch(response => {
-						console.log('error', response)
-					});
-				;
-			});
+								this.setState({
+									pages
+								});
+							}
+						})
+						.catch(response => {
+							console.log('error', response)
+						});
+					;
+				});
+			}
 
-			starships.forEach((starshipsUrl, indexStarships) => {
-				getAPIResource(starshipsUrl)
-					.then(response => {
-						character.starships.push(response.data);
+			if (!character.isVehiclesLoaded) {
+				vehicles.forEach((vehiclesUrl, indexVehicles) => {
+					getAPIResource(vehiclesUrl)
+						.then(response => {
+							character.vehicles.push(response.data);
 
-						if (indexStarships + 1 == starships.length) {
-							page = pages[activePage];
-							page[characterIndex] = character;
-							pages[activePage] = page;
+							if (indexVehicles + 1 == vehicles.length) {
+								character.isVehiclesLoaded = true;
+								page = pages[activePage];
+								page[characterIndex] = character;
+								pages[activePage] = page;
 
-							this.setState({
-								pages
-							});
-						}
-					})
-					.catch(response => {
-						console.log('error', response)
-					});
-				;
-			});
-
-			vehicles.forEach((vehiclesUrl, indexVehicles) => {
-				getAPIResource(vehiclesUrl)
-					.then(response => {
-						character.vehicles.push(response.data);
-
-						if (indexVehicles + 1 == vehicles.length) {
-							page = pages[activePage];
-							page[characterIndex] = character;
-							pages[activePage] = page;
-
-							this.setState({
-								pages
-							});
-						}
-					})
-					.catch(response => {
-						console.log('error', response)
-					});
-				;
-			});
+								this.setState({
+									pages
+								});
+							}
+						})
+						.catch(response => {
+							console.log('error', response)
+						});
+					;
+				});
+			}
 		}
 
 		/**
@@ -572,22 +577,26 @@ const Container = (Component) => (
 
 			this.loadCharacterInfo(id);
 
-			const answerIndex = answers.find(a => a.url == id);
+			const answerIndex = answers.findIndex(a => a.url == id);
 			let answer;
 
 			if (answerIndex > -1) {
-				 answer = answers[answerIndex];
+				answer = answers[answerIndex];
+				answer.openedModal = true;
+				answer.hasUsedHint = true;
 
+				answers[answerIndex] = answer;
 			} else {
 				answer = {
-					url: id
+					url: id,
+					openedModal: true,
+					hasUsedHint: true
 				}
+
+				answers.push(answer);
 			}
 
-			answer.openedModal = true;
-			answer.hasUsedHint = true;
-
-			answers[answerIndex] = answer;
+			debugger
 
 			this.setState({
 				answers

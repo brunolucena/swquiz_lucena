@@ -36,6 +36,7 @@ const SWQuiz = (props) => {
 							const answer = answers.find(a => a.url == item.url);
 
 							const playerGuess = answer ? answer.text : '';
+							const openedModal = answer ? answer.openedModal : false;
 
 							return (
 								<QuizItem
@@ -45,6 +46,7 @@ const SWQuiz = (props) => {
 									id={item.url}
 									isPlaceholder={isGameFinished || !dateTimeStart}
 									key={item.url}
+									openedModal={openedModal}
 									openHintModal={openHintModal}
 									playerGuess={playerGuess}
 								/>
