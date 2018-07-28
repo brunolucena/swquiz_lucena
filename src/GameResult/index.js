@@ -68,7 +68,7 @@ const GameResult = (props) => {
 									<div className={styles.resultData}>
 										<div>Name: {playerName}</div>
 										<div>Email: {playerEmail}</div>
-										<Link to="/ranking" className={styles.button}>Back</Link>
+										<Link to="/" className={styles.button}>Back</Link>
 									</div>
 							}
 
