@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-import Helpers from './Helpers';
-import Services from './Services';
+import { LocalStorageHelpers } from './Helpers';
+import { SWApi } from './Services';
 
 /**
  * -SWQuiz is an instance of a Star Wars Quiz Game.
@@ -79,9 +79,6 @@ const Container = (Component) => (
 		}
 
 		componentDidMount() {
-			const { activePage, apiPeople, hash } = this.state;
-			const { getAPIResource } = Services;
-
 			this.loadInitialGameData();
 		}
 
@@ -101,8 +98,8 @@ const Container = (Component) => (
 		 */
 		createPages(peoples, gameHash) {
 			const { itensPerPage } = this.props;
-			const { getAPIResource } = Services;
-			const { getGame, setOrUpdateGame } = Helpers;
+			const { getAPIResource } = SWApi;
+			const { getGame, setOrUpdateGame } = LocalStorageHelpers;
 
 			peoples = peoples.sort((a, b) => (0.5 - Math.random()));
 
@@ -183,7 +180,7 @@ const Container = (Component) => (
 		 */
 		closeHintModal(id) {
 			const { answers, hash } = this.state;
-			const { setGameData } = Helpers;
+			const { setGameData } = LocalStorageHelpers;
 
 			const answerIndex = answers.findIndex(a => a.url == id);
 			const answer = answers[answerIndex];
@@ -217,7 +214,7 @@ const Container = (Component) => (
 
 		gameCounter() {
 			const { dateTimeLimit } = this.state;
-			const { setGameData } = Helpers;
+			const { setGameData } = LocalStorageHelpers;
 
 			const secondsRemaining = moment().diff(dateTimeLimit, 'seconds') * -1;
 
@@ -292,7 +289,7 @@ const Container = (Component) => (
 		 */
 		handleItemGuessInputChange(event, id) {
 			const { answers, hash} = this.state;
-			const { setGameData } = Helpers;
+			const { setGameData } = LocalStorageHelpers;
 
 			const answerIndex = answers.findIndex(a => a.url == id);
 			let answer;
@@ -355,7 +352,7 @@ const Container = (Component) => (
 		 */
 		loadCharacterInfo(characterId) {
 			const { activePage, pages } = this.state;
-			const { getAPIResource } = Services;
+			const { getAPIResource } = SWApi;
 
 			let page = pages[activePage];
 
@@ -498,7 +495,7 @@ const Container = (Component) => (
 		 *				The next and previous page also loads if available.
 		 */
 		loadInitialGameData() {
-			const { getAPIResource } = Services;
+			const { getAPIResource } = SWApi;
 
 			const loadPeoplesPage = (url) => {
 				let currentPage = 1;
@@ -537,7 +534,7 @@ const Container = (Component) => (
 		 */
 		loadPageInfo(pageNumber) {
 			const { pages } = this.state;
-			const { getAPIResource } = Services;
+			const { getAPIResource } = SWApi;
 
 			pages[pageNumber].forEach((character, indexCharacter) => {
 				let isCharacterImageLoaded = false;
@@ -574,7 +571,7 @@ const Container = (Component) => (
 		 */
 		openHintModal(id) {
 			const { answers, hash } = this.state;
-			const { setGameData } = Helpers;
+			const { setGameData } = LocalStorageHelpers;
 
 			this.loadCharacterInfo(id);
 
@@ -608,7 +605,7 @@ const Container = (Component) => (
 		 * @description Start a game by setting it's dateTimeStart and the dateTimeLimit, considering the timeLimit.
 		 */
 		startGame() {
-			const { setGameData } = Helpers;
+			const { setGameData } = LocalStorageHelpers;
 
 			const addMinutes = (date, minutes) => {
 				return new Date(date.getTime() + minutes * 60000);

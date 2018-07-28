@@ -1,5 +1,1 @@
-import localStorage from './localStorage';
-
-export default {
-	...localStorage
-}
+export { default as LocalStorageHelpers } from './LocalStorage';

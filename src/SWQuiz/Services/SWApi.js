@@ -1,5 +1,12 @@
 import axios from 'axios';
 
+const getAPIResource = (url) => (
+	axios({
+		method: 'GET',
+		url
+	})
+);
+
 const getPeoplesPage = (page) => (
 	axios({
 		method: 'GET',
@@ -8,5 +15,6 @@ const getPeoplesPage = (page) => (
 );
 
 export default {
+	getAPIResource,
 	getPeoplesPage
 }
