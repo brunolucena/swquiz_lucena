@@ -1,13 +1,16 @@
 @import 'variables';
 
 .button{
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	padding: 1rem 2rem;
-	color: $text-color;
-	background: none;
 	border: 1px solid $text-color;
 	border-radius: 5px;
-	cursor: pointer;
+	color: $text-color;
+	background: none;
 	text-decoration: none;
+	cursor: pointer;
 	transition: all 0.2s ease-out;
 
 	#{$p-event} {

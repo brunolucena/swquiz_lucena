@@ -1,1 +1,10 @@
-@import '../shared-styles/variables';
+@import '../shared-styles/buttons';
+
+.paginationWrapper {
+	display: flex;
+	justify-content: center;
+
+	> .buttonLight {
+		font-size: 1.5rem;
+	}
+}

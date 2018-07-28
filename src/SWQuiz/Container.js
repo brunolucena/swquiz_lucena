@@ -70,6 +70,8 @@ const Container = (Component) => (
 			this.closeHintModal = this.closeHintModal.bind(this);
 			this.gameCounter = this.gameCounter.bind(this);
 			this.getItensFromPage = this.getItensFromPage.bind(this);
+			this.goToNextPage = this.goToNextPage.bind(this);
+			this.goToPreviousPage = this.goToPreviousPage.bind(this);
 			this.handleItemGuessInputChange = this.handleItemGuessInputChange.bind(this);
 			this.openHintModal = this.openHintModal.bind(this);
 			this.startGame = this.startGame.bind(this);
@@ -630,7 +632,11 @@ const Container = (Component) => (
 					{...this.props}
 					{...this.state}
 					closeHintModal={this.closeHintModal}
+					goToNextPage={this.goToNextPage}
+					goToPreviousPage={this.goToPreviousPage}
 					handleItemGuessInputChange={this.handleItemGuessInputChange}
+					hasNext={this.hasNextPage()}
+					hasPrevious={this.hasPreviousPage()}
 					itens={this.getItensFromPage(this.state.activePage)}
 					openHintModal={this.openHintModal}
 					startGame={this.startGame}

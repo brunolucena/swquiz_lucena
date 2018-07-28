@@ -13,7 +13,10 @@ import styles from './styles.scss';
 
 
 const SWQuiz = (props) => {
-	const { answers, closeHintModal, dateTimeEnded, dateTimeLimit, dateTimeStart, handleItemGuessInputChange, isGameFinished, isGameReady, itens, itensPerPage, openHintModal, startGame } = props;
+	const { answers, closeHintModal, dateTimeEnded, dateTimeLimit, dateTimeStart,
+			goToNextPage, goToPreviousPage, handleItemGuessInputChange, hasNext, hasPrevious,
+			isGameFinished, isGameReady, itens, itensPerPage, openHintModal, startGame
+	} = props;
 
 	const array = Array(itensPerPage).fill(0);
 
@@ -62,9 +65,12 @@ const SWQuiz = (props) => {
 				}
 			</div>
 
-			<div className={styles.pagination}>
-				<Pagination />
-			</div>
+			<Pagination
+				goToNextPage={goToNextPage}
+				goToPreviousPage={goToPreviousPage}
+				hasNext={hasNext}
+				hasPrevious={hasPrevious}
+			/>
 
 			<Dialog open={!dateTimeStart} aria-labelledby="simple-dialog-title">
 				<GameLoading isReadyToStart={isGameReady} startGame={startGame}/>
