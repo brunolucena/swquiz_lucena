@@ -302,17 +302,20 @@ const Container = (Component) => (
 		}
 
 		gameCounter() {
+			const { hash } = this.state;
 			const { setGameData } = LocalStorageHelpers;
 
 			if (this.isExpired()) {
 				clearInterval(this.interval);
 
+				const score = this.computeGameScore();
+
 				this.setState({
 					dateTimeEnded: new Date(),
-					score: this.computeGameScore()
+					score
 				}, () => {
-					setGameData(this.state.hash, 'dateTimeEnded', this.state.dateTimeEnded);
-					setGameData(this.state.hash, 'isGameFinished', this.state.isGameFinished);
+					setGameData(hash, 'dateTimeEnded', this.state.dateTimeEnded);
+					setGameData(hash, 'score', score);
 				});
 			}
 		}
