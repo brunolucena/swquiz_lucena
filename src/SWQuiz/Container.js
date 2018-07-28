@@ -196,33 +196,23 @@ const Container = (Component) => (
 			}
 
 			if (game) {
-				this.setState({
-					answers: game.answers ? game.answers : [],
-					dateTimeEnded: new Date(game.dateTimeEnded),
-					dateTimeLimit: new Date(game.dateTimeLimit),
-					dateTimeStart: new Date(game.dateTimeStart),
-					email: game.email,
-					name: game.name,
-					score: game.score
-				}, () => {
-					if (!this.isExpired()) {
-						Object.keys(game.pages).forEach(pageNumber => {
-							const page = game.pages[pageNumber].map(({url}) => (
-								peoples.find(people => people.url == url)
-							));
+				if (!this.isExpired()) {
+					Object.keys(game.pages).forEach(pageNumber => {
+						const page = game.pages[pageNumber].map(({url}) => (
+							peoples.find(people => people.url == url)
+						));
 
-							pages[pageNumber] = page;
-						});
+						pages[pageNumber] = page;
+					});
 
-						this.setState({
-							pages
-						}, () => {
-							this.loadPageInfo(this.state.activePage);
-						});
-					} else {
-						this.gameCounter();
-					}
-				});
+					this.setState({
+						pages
+					}, () => {
+						this.loadPageInfo(this.state.activePage);
+					});
+				} else {
+					this.gameCounter();
+				}
 			} else {
 				const hash = this.createHash();
 
@@ -608,35 +598,59 @@ const Container = (Component) => (
 		loadInitialGameData() {
 			const { hash } = this.state;
 			const { getAPIResource } = SWApi;
+			const { getGame } = LocalStorageHelpers;
 
-			const loadPeoplesPage = (url) => {
-				let currentPage = 1;
+			let game = getGame(hash);
 
-				getAPIResource(url)
-					.then(response => {
-						const { data } = response;
-						const { next, results } = data;
+			const loadGame = () => {
+				const loadPeoplesPage = (url) => {
+					let currentPage = 1;
 
-						const peoples = this.state.apiPeople.concat(results);
+					getAPIResource(url)
+						.then(response => {
+							const { data } = response;
+							const { next, results } = data;
 
-						this.setState({
-							apiPeople: peoples
-						});
+							const peoples = this.state.apiPeople.concat(results);
 
-						if (next) {
-							loadPeoplesPage(next);
-						} else {
-							let allPeople = this.state.apiPeople;
+							this.setState({
+								apiPeople: peoples
+							});
 
-							this.createPages(allPeople, hash);
-						}
-					})
-					.catch(response => {
-						console.log('error', response)
-					})
+							if (next) {
+								loadPeoplesPage(next);
+							} else {
+								let allPeople = this.state.apiPeople;
+
+								this.createPages(allPeople, hash);
+							}
+						})
+						.catch(response => {
+							console.log('error', response)
+						})
+				}
+
+				loadPeoplesPage('https://swapi.co/api/people/?page=1');
 			}
 
-			loadPeoplesPage('https://swapi.co/api/people/?page=1');
+			if (game) {
+				this.setState({
+					answers: game.answers ? game.answers : [],
+					dateTimeEnded: new Date(game.dateTimeEnded),
+					dateTimeLimit: new Date(game.dateTimeLimit),
+					dateTimeStart: new Date(game.dateTimeStart),
+					email: game.email,
+					isGameFinished: game.isGameFinished,
+					name: game.name,
+					score: game.score
+				}, () => {
+					if (!this.isExpired()) {
+						loadGame();
+					}
+				});
+			} else {
+				loadGame();
+			}
 		}
 
 		/**
@@ -730,6 +744,10 @@ const Container = (Component) => (
 				this.setState({
 					[attribute]: value
 				});
+			});
+
+			this.setState({
+				isGameFinished: true
 			});
 		}
 
