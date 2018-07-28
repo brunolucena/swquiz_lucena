@@ -95,7 +95,7 @@ const Container = (Component) => (
 		 * @description Computes the game score.
 		 *				This function can be adapted to change how the score is computed.
 		 *				Now, it trims all the spaces from each answer and make it lowerCase, then
-		 *				compare with the correct answer.
+		 *				compare with the corre, scorect answer.
 		 *				If it's a perfect match, it gives {this.props.pointsForFullAnswer}, and halves
 		 *				the result if player has used hint for that answer.
 		 *				If it's not a perfect match, it gives 0 points.
@@ -302,17 +302,21 @@ const Container = (Component) => (
 		}
 
 		gameCounter() {
-			const { hash } = this.state;
+			const { hash, score } = this.state;
 			const { setGameData } = LocalStorageHelpers;
 
 			if (this.isExpired()) {
 				clearInterval(this.interval);
 
-				const score = this.computeGameScore();
+				let calculateScore = score;
+
+				if (score == null) {
+					calculateScore = this.computeGameScore();
+				}
 
 				this.setState({
 					dateTimeEnded: new Date(),
-					score
+					score: calculateScore
 				}, () => {
 					setGameData(hash, 'dateTimeEnded', this.state.dateTimeEnded);
 					setGameData(hash, 'score', score);
