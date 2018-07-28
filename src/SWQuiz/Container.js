@@ -309,7 +309,6 @@ const Container = (Component) => (
 
 				this.setState({
 					dateTimeEnded: new Date(),
-					isGameFinished: true,
 					score: this.computeGameScore()
 				}, () => {
 					setGameData(this.state.hash, 'dateTimeEnded', this.state.dateTimeEnded);
@@ -745,6 +744,8 @@ const Container = (Component) => (
 					[attribute]: value
 				});
 			});
+
+			setGameData(hash, 'isGameFinished', true)
 
 			this.setState({
 				isGameFinished: true
