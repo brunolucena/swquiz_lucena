@@ -33,7 +33,6 @@ const Container = (Component) => (
 		}
 
 		openModalRanking() {
-			console.log('openModalRanking')
 			this.setState({
 				openedModalRanking: true
 			});
