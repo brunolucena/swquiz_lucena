@@ -12,6 +12,12 @@ const deleteGame = (gameHash) => {
 	localStorage.setItem(GAMESNAME, JSON.stringify(games));
 }
 
+const getFinishedGames = () => {
+	let games = getGames();
+
+	return games.filter(game => game.isGameFinished && game.score != null);
+}
+
 const getGame = (gameHash) => {
 	let games = getGames();
 
@@ -79,6 +85,7 @@ const setOrUpdateGame = (game) => {
 
 export default {
 	deleteGame,
+	getFinishedGames,
 	getGame,
 	getLastPendingGame,
 	getPendingGames,
