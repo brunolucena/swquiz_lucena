@@ -60,9 +60,19 @@ const Container = (Component) => (
 		}
 
 		saveGameDataHandler(event) {
+			const { email, name } = this.state;
+			const { saveGameData } = this.props;
+
 			event.preventDefault();
 
-			console.log('saveGameDataHandler', this.validateForm());
+			if (this.validateForm()) {
+				const data = {
+					email,
+					name
+				};
+
+				saveGameData(data);
+			}
 		}
 
 		validateField(fieldName, value) {
