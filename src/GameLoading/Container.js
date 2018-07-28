@@ -6,7 +6,12 @@ const Container = (Component) => (
 	class extends React.Component {
 		static propTypes = {
 			isReadyToStart: PropTypes.bool.isRequired, // Game is ready to start
+			loadingMessage: PropTypes.string, // Message to display while loading
 			startGame: PropTypes.func.isRequired // Function to start a game
+		};
+
+		static defaultProps = {
+			loadingMessage: 'Aguarde enquanto seu jogo é carregado...'
 		};
 
 		constructor(props) {

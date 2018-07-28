@@ -8,7 +8,7 @@ import styles from './styles.scss';
 
 
 const GameLoading = (props) => {
-	const { isReadyToStart, timeLeft } = props;
+	const { isReadyToStart, loadingMessage, timeLeft } = props;
 
 	return (
 		<div className={styles.gameLoadingWrapper}>
@@ -21,7 +21,7 @@ const GameLoading = (props) => {
 					[
 						<CircularProgress key="circular-progress" style={{color: "#b9ab25"}}/>,
 						<div key="info" className={styles.info}>
-							Aguarde enquanto seu jogo é carregado.
+							{loadingMessage}
 						</div>
 					]
 			}
