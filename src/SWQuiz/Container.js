@@ -145,7 +145,7 @@ const Container = (Component) => (
 			const computeAnswerScore = (matchScore, fullScorePoints, hasUsedHint = false) => {
 				if (matchScore < 1) return matchScore
 
-				let answerScore = fullScorePoints / matchScore;
+				let answerScore = fullScorePoints / matchScore * 100;
 
 				return hasUsedHint ? answerScore / 2 : answerScore
 			};
