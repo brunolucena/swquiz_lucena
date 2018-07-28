@@ -39,10 +39,28 @@ const setAnswer = (gameHash, answer) => {
 	localStorage.setItem(GAMESNAME, JSON.stringify(games));
 }
 
-const setGame = (game) => {
+const setGameData = (gameHash, attribute, value) => {
 	const games = getGames();
 
-	games.push(game);
+	const gameIndex = games.findIndex(game => game.hash == gameHash);
+	const game = games[gameIndex];
+
+	game[attribute] = value;
+	games[gameIndex] = game;
+
+	localStorage.setItem(GAMESNAME, JSON.stringify(games));
+}
+
+const setOrUpdateGame = (game) => {
+	const games = getGames();
+
+	const localStorageGameIndex = games.findIndex(g => g.hash == game.hash);
+
+	if (localStorageGameIndex > -1) {
+		games[localStorageGameIndex] = game;
+	} else {
+		games.push(game);
+	}
 
 	localStorage.setItem(GAMESNAME, JSON.stringify(games));
 }
@@ -51,5 +69,6 @@ export default {
 	deleteGame,
 	getGame,
 	setAnswer,
-	setGame
+	setGameData,
+	setOrUpdateGame
 }

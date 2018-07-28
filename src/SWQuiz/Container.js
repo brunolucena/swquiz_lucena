@@ -100,7 +100,7 @@ const Container = (Component) => (
 		createPages(peoples, gameHash) {
 			const { itensPerPage } = this.props;
 			const { getAPIResource } = Services;
-			const { getGame, setGame } = Helpers;
+			const { getGame, setOrUpdateGame } = Helpers;
 
 			peoples = peoples.sort((a, b) => (0.5 - Math.random()));
 
@@ -134,7 +134,7 @@ const Container = (Component) => (
 				game = {
 					hash,
 					pages: {},
-					isFinished: false
+					isGameFinished: false
 				};
 
 				let actualPage = 1;
@@ -163,7 +163,7 @@ const Container = (Component) => (
 					game.pages[actualPage].push(peopleToLocalStorage);
 				});
 
-				setGame(game);
+				setOrUpdateGame(game);
 
 				this.setState({
 					hash,
@@ -218,6 +218,7 @@ const Container = (Component) => (
 
 		gameCounter() {
 			const { dateTimeLimit } = this.state;
+			const { setGameData } = Helpers;
 
 			const secondsRemaining = moment().diff(dateTimeLimit, 'seconds') * -1;
 
@@ -227,6 +228,9 @@ const Container = (Component) => (
 				this.setState({
 					dateTimeEnded: new Date(),
 					isGameFinished: true
+				}, () => {
+					setGameData(this.state.hash, 'dateTimeEnded', this.state.dateTimeEnded);
+					setGameData(this.state.hash, 'isGameFinished', this.state.isGameFinished);
 				});
 			}
 		}
@@ -548,6 +552,8 @@ const Container = (Component) => (
 		 * @description Start a game by setting it's dateTimeStart and the dateTimeLimit, considering the timeLimit.
 		 */
 		startGame() {
+			const { setGameData } = Helpers;
+
 			const addMinutes = (date, minutes) => {
 				return new Date(date.getTime() + minutes * 60000);
 			};
@@ -556,6 +562,9 @@ const Container = (Component) => (
 				this.setState({
 					dateTimeLimit: addMinutes(new Date(), this.props.timeLimit / 60),
 					dateTimeStart: new Date()
+				}, () => {
+					setGameData(this.state.hash, 'dateTimeLimit', this.state.dateTimeLimit);
+					setGameData(this.state.hash, 'dateTimeStart', this.state.dateTimeStart);
 				});
 			}
 		}
