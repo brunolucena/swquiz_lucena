@@ -21,7 +21,9 @@ const getGame = (gameHash) => {
 }
 
 const getLastPendingGame = () => {
-	return getPendingGames()[0]
+	const pendingGames = getPendingGames();
+
+	return pendingGames[pendingGames.length - 1]
 }
 
 const getPendingGames = () => {
