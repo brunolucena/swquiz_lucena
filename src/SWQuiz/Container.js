@@ -122,9 +122,7 @@ const Container = (Component) => (
 					dateTimeLimit: new Date(game.dateTimeLimit),
 					dateTimeStart: new Date(game.dateTimeStart)
 				}, () => {
-					const secondsRemaining = moment().diff(this.state.dateTimeLimit, 'seconds') * -1;
-
-					if (secondsRemaining > 1) {
+					if (!this.isExpired()) {
 						Object.keys(game.pages).forEach(pageNumber => {
 							const page = game.pages[pageNumber].map(({url}) => (
 								peoples.find(people => people.url == url)
@@ -228,12 +226,9 @@ const Container = (Component) => (
 		}
 
 		gameCounter() {
-			const { dateTimeLimit } = this.state;
 			const { setGameData } = LocalStorageHelpers;
 
-			const secondsRemaining = moment().diff(dateTimeLimit, 'seconds') * -1;
-
-			if (secondsRemaining < 1) {
+			if (this.isExpired()) {
 				clearInterval(this.interval);
 
 				this.setState({
@@ -360,6 +355,20 @@ const Container = (Component) => (
 			const remainingPages = pages.splice(index, pages.length);
 
 			return pages.length > 0
+		}
+
+		/**
+		 * @description Check if the game has expired.
+		 *				A game expires when it reaches the dateTimeLimit.
+		 *
+		 * @returns {bool} Game has expired
+		 */
+		isExpired() {
+			const { dateTimeLimit } = this.state;
+
+			const secondsRemaining = moment().diff(dateTimeLimit, 'seconds') * -1;
+
+			return secondsRemaining < 1
 		}
 
 		/**
@@ -625,7 +634,7 @@ const Container = (Component) => (
 		}
 
 		/**
-		 * @description Start a game by setting it's dateTimeStart and the dateTimeLimit, considering the timeLimit.
+		 * @description Start a game by setting it's dateTimeStart and dateTimeLimit, considering this.props.timeLimit.
 		 */
 		startGame() {
 			const { setGameData } = LocalStorageHelpers;
