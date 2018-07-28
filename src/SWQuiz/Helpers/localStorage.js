@@ -20,6 +20,16 @@ const getGame = (gameHash) => {
 	return game
 }
 
+const getLastPendingGame = () => {
+	return getPendingGames()[0]
+}
+
+const getPendingGames = () => {
+	let games = getGames();
+
+	return games.filter(game => !game.isGameFinished)
+}
+
 const setAnswer = (gameHash, answer) => {
 	const games = getGames();
 	const gameIndex = games.findIndex(g => g.hash == gameHash);
@@ -68,6 +78,8 @@ const setOrUpdateGame = (game) => {
 export default {
 	deleteGame,
 	getGame,
+	getLastPendingGame,
+	getPendingGames,
 	setAnswer,
 	setGameData,
 	setOrUpdateGame

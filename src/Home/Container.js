@@ -1,5 +1,8 @@
 import React from 'react';
 
+import { LocalStorageHelpers } from '../SWQuiz/Helpers';
+
+
 const Container = (Component) => (
 	class extends React.Component {
 		constructor(props) {
@@ -22,9 +25,11 @@ const Container = (Component) => (
 		}
 
 		getPendingGameHash() {
-			let games = [];
+			const { getLastPendingGame } = LocalStorageHelpers;
 
-			return games && games.length ? games.filter(g => !g.isFinished)[0].hash : ''
+			let lastPendingGame = getLastPendingGame();
+
+			return lastPendingGame ? lastPendingGame.hash : ''
 		}
 
 		openModalRanking() {
