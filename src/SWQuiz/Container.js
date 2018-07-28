@@ -33,7 +33,6 @@ const Container = (Component) => (
 			hash: PropTypes.string, // Hash of an already started game. Can be empty
 			itensPerPage: PropTypes.number, // How many items to display on each page
 			pointsForFullAnswer: PropTypes.number, // Points for a correct answer without tips
-			pointsForAnswerWithHints: PropTypes.number, // Points for a correct answer with tips
 			timeLimit: PropTypes.number // Number in seconds of available time to answer the Quiz
 		};
 
@@ -42,7 +41,6 @@ const Container = (Component) => (
 			hash: '',
 			itensPerPage: 10,
 			pointsForFullAnswer: 10,
-			pointsForAnswerWithHints: 5,
 			timeLimit: 120
 		};
 
@@ -57,13 +55,13 @@ const Container = (Component) => (
 				dateTimeEnded: '', // DateTime that the game was concluded.
 				dateTimeLimit: '', // DateTime limit to finish the game (dateTimeStart + timeLimit).
 				dateTimeStart: '', // DateTime when the game started.
-				email: '', // Player email.
+				email: null, // Player email.
 				hash: props.hash, // Unique hash
 				isGameFinished: false, // Game has been finished and player has put it's name and email.
 				isGameReady: false, // Game is ready to start.
-				name: '', // Player name.
+				name: null, // Player name.
 				pages: [], // Pages to show at the game. Each page is an attribute as the page and the value as an array that expect to have {props.itensPerPage} length.
-				score: 0 // Player final score.
+				score: null // Player final score.
 			};
 
 			this.closeHintModal = this.closeHintModal.bind(this);
@@ -93,6 +91,80 @@ const Container = (Component) => (
 		}
 
 		/**
+		 * @description Computes the game score.
+		 *				This function can be adapted to change how the score is computed.
+		 *				Now, it trims all the spaces from each answer and make it lowerCase, then
+		 *				compare with the correct answer.
+		 *				If it's a perfect match, it gives {this.props.pointsForFullAnswer}, and halves
+		 *				the result if player has used hint for that answer.
+		 *				If it's not a perfect match, it gives 0 points.
+		 *
+		 * @returns {number} Full score of the game.
+		 */
+		computeGameScore() {
+			const { answers, apiPeople } = this.state;
+			const { pointsForFullAnswer } = this.props;
+
+			/**
+			 * @description Computes the match of the one value to another.
+			 *				Can use an algorithm to compute that match.
+			 *				Now, it computes only if there is a match or not (0 or 100).
+			 *
+			 * @param {string} value1 First value.
+			 * @param {string} value2 Second value.
+			 *
+			 * @returns {number} Score of the match. 0 to 100.
+			 */
+			const computeMatchScore = (value1, value2) => {
+				let matchScore = 0;
+
+				value1 = value1.toLowerCase().replace(/\s/g, "");
+				value2 = value2.toLowerCase().replace(/\s/g, "");
+
+				if (value1 == value2) {
+					matchScore = 100;
+				}
+
+				return matchScore
+			};
+
+			/**
+			 * @description Computes the score of an answer.
+			 *				The score is computed based on a percentage of a perfect match.
+			 *				Ex: Expected Answer = 'Darth Vader'.
+			 *					Actual Answer = 'Darth Vader'. (Perfect Match. 100% of fullScorePoints.)
+			 *					Actual Answer = 'Darht Vder'. (Partial Match. X% of fullScorePoints.)
+			 *
+			 * @param {number} matchScore Range from 0 to 100 of how perfect was the answer match.
+			 * @param {number} fullScorePoints Points for a perfect answer.
+			 * @param {bool} hasUsedHint If has used hint, the score is halved.
+			 *
+			 * @returns {number} Answer score
+			 */
+			const computeAnswerScore = (matchScore, fullScorePoints, hasUsedHint = false) => {
+				if (matchScore < 1) return matchScore
+
+				let answerScore = fullScorePoints / matchScore;
+
+				return hasUsedHint ? answerScore / 2 : answerScore
+			};
+
+			let gameScore = 0;
+
+			answer.forEach(answer => {
+				const expected = apiPeople.find(people => people.url == answer.url).name;
+				const actual = answer.text;
+
+				const matchScore = computeMatchScore(expected, actual);
+				const answerScore = computeAnswerScore(matchScore, pointsForFullAnswer, answer.hasUsedHint);
+
+				gameScore += answerScore;
+			});
+
+			return gameScore
+		}
+
+		/**
 		 * @description Create pages from peoples array. Saves the data both on component and localStorage.
 		 *				At localStorage, saves only the url of the char, so the localStorage does not have the
 		 *				actual answers for the Quiz.
@@ -116,11 +188,19 @@ const Container = (Component) => (
 			let game = getGame(gameHash);
 			let pages = {};
 
+			if (hash && !game) {
+				this.props.history.push('/swquiz')
+			}
+
 			if (game) {
 				this.setState({
+					answers: game.answers,
 					dateTimeEnded: new Date(game.dateTimeEnded),
 					dateTimeLimit: new Date(game.dateTimeLimit),
-					dateTimeStart: new Date(game.dateTimeStart)
+					dateTimeStart: new Date(game.dateTimeStart),
+					email: game.email,
+					name: game.name,
+					score: game.score
 				}, () => {
 					if (!this.isExpired()) {
 						Object.keys(game.pages).forEach(pageNumber => {
@@ -144,9 +224,12 @@ const Container = (Component) => (
 				const hash = this.createHash();
 
 				game = {
+					email: null,
 					hash,
+					isGameFinished: false,
+					name: null,
 					pages: {},
-					isGameFinished: false
+					score: null
 				};
 
 				let actualPage = 1;
@@ -521,13 +604,6 @@ const Container = (Component) => (
 		loadInitialGameData() {
 			const { hash } = this.state;
 			const { getAPIResource } = SWApi;
-			const { getGame } = LocalStorageHelpers;
-
-			let game = getGame(hash);
-
-			if (hash && !game) {
-				this.props.history.push('/swquiz')
-			}
 
 			const loadPeoplesPage = (url) => {
 				let currentPage = 1;
