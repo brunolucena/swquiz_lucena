@@ -1,1 +1,23 @@
 @import '../shared-styles/variables';
+
+.rankingWrapper {
+	min-width: 500px;
+	padding: 1rem;
+	color: $text-color;
+
+	.title {
+		display: flex;
+		justify-content: center;
+		font-size: 2rem;
+	}
+
+	.content {
+		margin-top: 2rem;
+
+		.item {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+	}
+}
