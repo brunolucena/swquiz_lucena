@@ -16,7 +16,7 @@ import styles from './styles.scss';
 const SWQuiz = (props) => {
 	const { answers, closeHintModal, dateTimeEnded, dateTimeLimit, dateTimeStart,
 			goToNextPage, goToPreviousPage, handleItemGuessInputChange, hasNext, hasPrevious,
-			isGameFinished, isGameReady, itens, itensPerPage, openHintModal, startGame
+			isExpired, isGameFinished, isGameReady, itens, itensPerPage, openHintModal, startGame
 	} = props;
 
 	const array = Array(itensPerPage).fill(0);
@@ -78,6 +78,10 @@ const SWQuiz = (props) => {
 
 			<Dialog open={!dateTimeStart} aria-labelledby="simple-dialog-title">
 				<GameLoading isReadyToStart={isGameReady} startGame={startGame}/>
+			</Dialog>
+
+			<Dialog open={isExpired} aria-labelledby="simple-dialog-title">
+				EXPIROU!
 			</Dialog>
 		</div>
 	);

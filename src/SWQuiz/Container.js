@@ -665,6 +665,7 @@ const Container = (Component) => (
 					handleItemGuessInputChange={this.handleItemGuessInputChange}
 					hasNext={this.hasNextPage()}
 					hasPrevious={this.hasPreviousPage()}
+					isExpired={this.isExpired()}
 					itens={this.getItensFromPage(this.state.activePage)}
 					openHintModal={this.openHintModal}
 					startGame={this.startGame}
