@@ -197,7 +197,7 @@ const Container = (Component) => (
 
 			if (game) {
 				this.setState({
-					answers: game.answers,
+					answers: game.answers ? game.answers : [],
 					dateTimeEnded: new Date(game.dateTimeEnded),
 					dateTimeLimit: new Date(game.dateTimeLimit),
 					dateTimeStart: new Date(game.dateTimeStart),
