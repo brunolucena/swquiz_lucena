@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -19,49 +20,60 @@ const GameResult = (props) => {
 			</div>
 
 			<div className={styles.gameData}>
-				<div className={styles.score}>
-					<span>{score}</span> points
-				</div>
-
-				<div className={styles.text}>
-					Fill the form below to save your score:
-				</div>
 				{
-				// !loading ?
-				// 	[
-				// 		<CircularProgress key="circular-progress" style={{color: "#b9ab25"}}/>,
-				// 		<div key="info" className={styles.info}>
-				// 			{loadingMessage}
-				// 		</div>
-				// 	]
-				// :
-						// {
-							!hasResult &&
-								<div className={styles.inputsContainer}>
-									<TextField
-										{...(formErrors.name && {error: !!formErrors.name})}
-										className={styles.textField}
-										helperText={formErrors.name}
-										label="Name"
-										name="name"
-										onChange={handleInputChange}
-										value={name}
-									/>
-									<TextField
-										{...(formErrors.email && {error: !!formErrors.email})}
-										className={styles.textField}
-										helperText={formErrors.email}
-										label="Email"
-										name="email"
-										onChange={handleInputChange}
-										value={email}
-									/>
+					loading ?
+						<div className={styles.loading}>
+							<CircularProgress key="circular-progress" style={{color: "#b9ab25"}}/>
+							<div key="info" className={styles.info}>
+								{loadingMessage}
+							</div>
+						</div>
+					:
+						<div>
+							<div className={styles.score}>
+								<span>{score}</span> points
+							</div>
 
-								</div>
-						// }
+							{
+								!hasResult ?
+									<div>
+										<div className={styles.text}>
+											Fill the form below to save your score:
+										</div>
+
+										<div className={styles.inputsContainer}>
+											<TextField
+												{...(formErrors.name && {error: !!formErrors.name})}
+												className={styles.textField}
+												helperText={formErrors.name}
+												label="Name"
+												name="name"
+												onChange={handleInputChange}
+												value={name}
+											/>
+											<TextField
+												{...(formErrors.email && {error: !!formErrors.email})}
+												className={styles.textField}
+												helperText={formErrors.email}
+												label="Email"
+												name="email"
+												onChange={handleInputChange}
+												value={email}
+											/>
+										</div>
+
+										<button className={styles.button} onClick={saveGameData}>Save</button>
+									</div>
+								:
+									<div className={styles.resultData}>
+										<div>Name: {playerName}</div>
+										<div>Email: {playerEmail}</div>
+										<Link to="/ranking" className={styles.button}>Back</Link>
+									</div>
+							}
+
+						</div>
 				}
-
-				<button className={styles.button} onClick={saveGameData}>Save</button>
 			</div>
 		</div>
 	);
@@ -80,4 +92,4 @@ GameResult.propTypes = {
 	score: PropTypes.number // Game score
 }
 
-export default Container(GameResult);
+export default withRouter(Container(GameResult));

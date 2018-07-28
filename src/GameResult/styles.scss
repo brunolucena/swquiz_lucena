@@ -20,6 +20,13 @@
 	width: 100%;
 	padding: 1rem 0;
 
+	.loading {
+		display: flex;
+		flex-flow: column;
+		align-items: center;
+		margin-top: 3rem;
+	}
+
 	.info {
 		margin-top: 2rem;
 	}
@@ -50,6 +57,19 @@
 
 		> div {
 			margin-bottom: 0.5rem;
+		}
+	}
+
+	.resultData {
+		display: flex;
+		flex-flow: column;
+
+		> div {
+			margin-bottom: 1rem;
+		}
+
+		> .button {
+			margin-top: 2rem;
 		}
 	}
 
