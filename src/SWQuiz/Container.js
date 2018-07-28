@@ -317,7 +317,8 @@ const Container = (Component) => (
 
 				this.setState({
 					dateTimeEnded: new Date(),
-					isGameFinished: true
+					isGameFinished: true,
+					score: this.computeGameScore()
 				}, () => {
 					setGameData(this.state.hash, 'dateTimeEnded', this.state.dateTimeEnded);
 					setGameData(this.state.hash, 'isGameFinished', this.state.isGameFinished);
