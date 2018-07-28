@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import Dialog from '@material-ui/core/Dialog';
 
 import GameLoading from '../GameLoading';
+import GameResult from '../GameResult';
 import Logo from '../Logo';
 import Pagination from '../Pagination';
 import QuizItem from '../QuizItem';
@@ -14,9 +15,10 @@ import styles from './styles.scss';
 
 
 const SWQuiz = (props) => {
-	const { answers, closeHintModal, dateTimeEnded, dateTimeLimit, dateTimeStart,
+	const { answers, closeHintModal, dateTimeEnded, dateTimeLimit, dateTimeStart, email,
 			goToNextPage, goToPreviousPage, handleItemGuessInputChange, hasNext, hasPrevious,
-			isExpired, isGameFinished, isGameReady, itens, itensPerPage, openHintModal, startGame
+			isExpired, isGameFinished, isGameReady, itens, itensPerPage, name,
+			openHintModal, saveGameData, score, startGame
 	} = props;
 
 	const array = Array(itensPerPage).fill(0);
@@ -81,7 +83,14 @@ const SWQuiz = (props) => {
 			</Dialog>
 
 			<Dialog open={isExpired} aria-labelledby="simple-dialog-title">
-				EXPIROU!
+				<GameResult
+					hasResult={isGameFinished && score != null}
+					loading={score == null}
+					playerEmail={email}
+					playerName={name}
+					saveGameData={saveGameData}
+					score={score}
+				/>
 			</Dialog>
 		</div>
 	);
