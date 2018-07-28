@@ -30,7 +30,7 @@ const Container = (Component) => (
 	class extends React.Component {
 		static propTypes = {
 			countdown: PropTypes.number, // Number in seconds of countdown before game begins
-			hash: PropTypes.string, // Hash of a already started game. Can be empty
+			hash: PropTypes.string, // Hash of an already started game. Can be empty
 			itensPerPage: PropTypes.number, // How many items to display on each page
 			pointsForFullAnswer: PropTypes.number, // Points for a correct answer without tips
 			pointsForAnswerWithHints: PropTypes.number, // Points for a correct answer with tips
@@ -79,6 +79,14 @@ const Container = (Component) => (
 		}
 
 		componentDidMount() {
+			const { match: { params } } = this.props;
+
+			if (params.hash) {
+				this.setState({
+					hash: params.hash
+				});
+			}
+
 			this.loadInitialGameData();
 		}
 
@@ -515,6 +523,7 @@ const Container = (Component) => (
 							loadPeoplesPage(next);
 						} else {
 							let allPeople = this.state.apiPeople;
+
 							this.createPages(allPeople, this.state.hash);
 						}
 					})

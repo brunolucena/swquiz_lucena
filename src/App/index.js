@@ -12,6 +12,7 @@ class App extends Component {
 				<Switch>
 					<Route exact path="/" component={Home} />
 					<Route exact path="/swquiz" component={SWQuiz} />
+					<Route exact path="/swquiz/:hash" component={SWQuiz} />
 				</Switch>
 			</div>
 		);
