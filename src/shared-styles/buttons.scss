@@ -1,4 +1,4 @@
-@import 'variables';
+@import './variables';
 
 .button{
 	display: flex;
@@ -16,6 +16,16 @@
 	#{$p-event} {
 		color: $primary1Color;
 		background: #000;
+	}
+
+	&:disabled {
+		cursor: not-allowed;
+		border: 1px solid lighten($text-color, 50);
+		color: lighten($text-color, 50);
+
+		#{$p-event}{
+			background: none;
+		}
 	}
 }
 
