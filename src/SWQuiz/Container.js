@@ -596,8 +596,6 @@ const Container = (Component) => (
 				answers.push(answer);
 			}
 
-			debugger
-
 			this.setState({
 				answers
 			}, () => {
