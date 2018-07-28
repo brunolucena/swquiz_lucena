@@ -16,6 +16,7 @@ const Container = (Component) => (
 			]),
 			gender: PropTypes.string,
 			hair_color: PropTypes.string,
+			handleInputChange: PropTypes.func, // Function that sets the user answer for this answer.
 			height: PropTypes.string,
 			homeworld: PropTypes.oneOfType([
 				PropTypes.shape({
@@ -29,6 +30,7 @@ const Container = (Component) => (
 			mass: PropTypes.string,
 			openedModal: PropTypes.bool, // Open modal with hints.
 			openHintModal: PropTypes.func, // Function that treats when a modal is opened.
+			playerGuess: PropTypes.string, // Player answer for that item.
 			skin_color: PropTypes.string,
 			species: PropTypes.oneOfType([
 				PropTypes.arrayOf(PropTypes.shape({
@@ -57,17 +59,7 @@ const Container = (Component) => (
 		constructor(props) {
 			super(props);
 
-			this.state = {
-				playerNameGuess: ''
-			};
-
-			this.handleInputChange = this.handleInputChange.bind(this);
-		}
-
-		handleInputChange(e) {
-			this.setState({
-				[e.target.name]: e.target.value
-			});
+			this.state = {};
 		}
 
 		render() {
@@ -75,7 +67,6 @@ const Container = (Component) => (
 				<Component
 					{...this.props}
 					{...this.state}
-					handleInputChange={this.handleInputChange}
 				/>
 			)
 		}

@@ -13,7 +13,7 @@ import styles from './styles.scss';
 
 
 const SWQuiz = (props) => {
-	const { closeHintModal, dateTimeEnded, dateTimeLimit, dateTimeStart, isGameFinished, isGameReady, itens, itensPerPage, openHintModal, startGame } = props;
+	const { answers, closeHintModal, dateTimeEnded, dateTimeLimit, dateTimeStart, handleItemGuessInputChange, isGameFinished, isGameReady, itens, itensPerPage, openHintModal, startGame } = props;
 
 	const array = Array(itensPerPage).fill(0);
 
@@ -32,16 +32,24 @@ const SWQuiz = (props) => {
 			<div className={styles.items}>
 				{
 					itens ?
-						itens.map(item => (
-							<QuizItem
-								{...item}
-								closeHintModal={closeHintModal}
-								id={item.url}
-								isPlaceholder={isGameFinished || !dateTimeStart}
-								key={item.url}
-								openHintModal={openHintModal}
-							/>
-						))
+						itens.map(item => {
+							const answer = answers.find(a => a.url == item.url);
+
+							const playerGuess = answer ? answer.text : '';
+
+							return (
+								<QuizItem
+									{...item}
+									closeHintModal={closeHintModal}
+									handleInputChange={handleItemGuessInputChange}
+									id={item.url}
+									isPlaceholder={isGameFinished || !dateTimeStart}
+									key={item.url}
+									openHintModal={openHintModal}
+									playerGuess={playerGuess}
+								/>
+							)
+						})
 					:
 						array.map((number, i) => (
 							<QuizItem

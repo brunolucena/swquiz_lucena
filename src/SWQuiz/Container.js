@@ -43,7 +43,7 @@ const Container = (Component) => (
 			itensPerPage: 10,
 			pointsForFullAnswer: 10,
 			pointsForAnswerWithHints: 5,
-			timeLimit: 5
+			timeLimit: 120
 		};
 
 		constructor(props) {
@@ -67,9 +67,10 @@ const Container = (Component) => (
 				score: 0 // Player final score.
 			};
 
-			this.gameCounter = this.gameCounter.bind(this);
 			this.closeHintModal = this.closeHintModal.bind(this);
+			this.gameCounter = this.gameCounter.bind(this);
 			this.getItensFromPage = this.getItensFromPage.bind(this);
+			this.handleItemGuessInputChange = this.handleItemGuessInputChange.bind(this);
 			this.openHintModal = this.openHintModal.bind(this);
 			this.startGame = this.startGame.bind(this);
 
@@ -180,22 +181,29 @@ const Container = (Component) => (
 		 * @param {number} id Character id. Since the API doesn't returns this info, it uses the url, which is unique.
 		 */
 		closeHintModal(id) {
-			const { activePage, pages } = this.state;
+			const { answers, hash } = this.state;
+			const { setGameData } = Helpers;
 
-			let page = pages[activePage];
+			const answerIndex = answers.find(a => a.url == id);
+			let answer;
 
-			page.map(item => {
-				if (item.url == id) {
-					item.openedModal = false;
+			if (answerIndex > -1) {
+				 answer = answers[answerIndex];
+
+			} else {
+				answer = {
+					url: id
 				}
+			}
 
-				return item
-			});
+			answer.openedModal = false;
 
-			pages[activePage] = page;
+			answers[answerIndex] = answer;
 
 			this.setState({
-				pages
+				answers
+			}, () => {
+				setGameData(hash, 'answers', answers);
 			});
 		}
 
@@ -283,6 +291,40 @@ const Container = (Component) => (
 					activePage: activePage - 1
 				});
 			}
+		}
+
+		/**
+		 * @description Sets the answer for a specific char.
+		 *
+		 * @param {event} event Input triggering change.
+		 * @param {number || string} id Id of the char.
+		 */
+		handleItemGuessInputChange(event, id) {
+			const { answers, hash} = this.state;
+			const { setGameData } = Helpers;
+
+			const answerIndex = answers.findIndex(a => a.url == id);
+			let answer;
+
+			if (answerIndex > -1) {
+				answer = answers[answerIndex];
+				answer.text = event.target.value;
+
+				answers[answerIndex] = answer;
+			} else {
+				answer = {
+					url: id,
+					text: event.target.value
+				}
+
+				answers.push(answer);
+			}
+
+			this.setState({
+				answers
+			}, () => {
+				setGameData(hash, 'answers', this.state.answers);
+			});
 		}
 
 		/**
@@ -520,31 +562,37 @@ const Container = (Component) => (
 
 		/**
 		 * @description Opens the hint modal of a specific character.
+		 *				Saves the information that hint was used.
 		 *
 		 * @param {number} id Character id. Since the API doesn't returns this info, it uses the url, which is unique.
 		 */
 		openHintModal(id) {
-			const { activePage, pages } = this.state;
-
-			let page = pages[activePage];
+			const { answers, hash } = this.state;
+			const { setGameData } = Helpers;
 
 			this.loadCharacterInfo(id);
 
-			page.map(item => {
-				if (item.url == id) {
-					item.openedModal = true;
-					item.hasUsedHint = true;
+			const answerIndex = answers.find(a => a.url == id);
+			let answer;
 
-					// TODO atualizar answers pra constar que o jogador abriu a modal
+			if (answerIndex > -1) {
+				 answer = answers[answerIndex];
+
+			} else {
+				answer = {
+					url: id
 				}
+			}
 
-				return item
-			});
+			answer.openedModal = true;
+			answer.hasUsedHint = true;
 
-			pages[activePage] = page;
+			answers[answerIndex] = answer;
 
 			this.setState({
-				pages
+				answers
+			}, () => {
+				setGameData(hash, 'answers', answers);
 			});
 		}
 
@@ -575,6 +623,7 @@ const Container = (Component) => (
 					{...this.props}
 					{...this.state}
 					closeHintModal={this.closeHintModal}
+					handleItemGuessInputChange={this.handleItemGuessInputChange}
 					itens={this.getItensFromPage(this.state.activePage)}
 					openHintModal={this.openHintModal}
 					startGame={this.startGame}
