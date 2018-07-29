@@ -1,5 +1,25 @@
 @import '../../shared-styles/variables';
 
 .charInfoWrapper {
+	display: flex;
+	flex-flow: column;
+	align-items: flex-start;
+	justify-content: flex-start;
+	min-height: 300px;
+	width: 500px;
 	padding: 1rem;
+	color: $text-color;
+}
+
+.top {
+	font-size: 2rem;
+}
+
+.charInfo {
+	width: 100%;
+	padding: 1rem 0;
+
+	> div {
+		margin-bottom: 0.5rem;
+	}
 }
