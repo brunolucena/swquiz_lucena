@@ -41,7 +41,7 @@ const Container = (Component) => (
 			countdown: 3,
 			itensPerPage: 10,
 			pointsForFullAnswer: 10,
-			timeLimit: 12000
+			timeLimit: 120
 		};
 
 		constructor(props) {
