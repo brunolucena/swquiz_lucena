@@ -18,7 +18,7 @@ const SWQuiz = (props) => {
 	const { answers, closeHintModal, dateTimeEnded, dateTimeLimit, dateTimeStart, email,
 			goToNextPage, goToPreviousPage, handleItemGuessInputChange, hasNext, hasPrevious,
 			isExpired, isGameFinished, isGameReady, itens, itensPerPage, name,
-			openHintModal, saveGameData, score, startGame
+			openHintModal, play, saveGameData, score, startGame
 	} = props;
 
 	const array = Array(itensPerPage).fill(0);
@@ -78,7 +78,7 @@ const SWQuiz = (props) => {
 					/>
 			}
 
-			<Dialog open={!dateTimeStart} aria-labelledby="simple-dialog-title">
+			<Dialog open={!play} aria-labelledby="simple-dialog-title">
 				<GameLoading isReadyToStart={isGameReady} startGame={startGame}/>
 			</Dialog>
 

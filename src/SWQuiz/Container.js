@@ -30,7 +30,6 @@ const Container = (Component) => (
 	class extends React.Component {
 		static propTypes = {
 			countdown: PropTypes.number, // Number in seconds of countdown before game begins
-			hash: PropTypes.string, // Hash of an already started game. Can be empty
 			itensPerPage: PropTypes.number, // How many items to display on each page
 			pointsForFullAnswer: PropTypes.number, // Points for a correct answer without tips
 			timeLimit: PropTypes.number // Number in seconds of available time to answer the Quiz
@@ -38,7 +37,6 @@ const Container = (Component) => (
 
 		static defaultProps = {
 			countdown: 3,
-			hash: '',
 			itensPerPage: 10,
 			pointsForFullAnswer: 10,
 			timeLimit: 120
@@ -56,11 +54,12 @@ const Container = (Component) => (
 				dateTimeLimit: '', // DateTime limit to finish the game (dateTimeStart + timeLimit).
 				dateTimeStart: '', // DateTime when the game started.
 				email: '', // Player email.
-				hash: props.hash, // Unique hash
+				hash: '', // Unique hash
 				isGameFinished: false, // Game has been finished and player has put it's name and email.
 				isGameReady: false, // Game is ready to start.
 				name: '', // Player name.
 				pages: [], // Pages to show at the game. Each page is an attribute as the page and the value as an array that expect to have {props.itensPerPage} length.
+				play: false,
 				score: null // Player final score.
 			};
 
@@ -191,10 +190,6 @@ const Container = (Component) => (
 			let game = getGame(gameHash);
 			let pages = {};
 
-			if (gameHash && !game) {
-				this.props.history.push('/swquiz')
-			}
-
 			if (game) {
 				if (!this.isExpired()) {
 					Object.keys(game.pages).forEach(pageNumber => {
@@ -214,11 +209,9 @@ const Container = (Component) => (
 					this.gameCounter();
 				}
 			} else {
-				const hash = this.createHash();
-
 				game = {
 					email: '',
-					hash,
+					hash: gameHash,
 					isGameFinished: false,
 					name: '',
 					pages: {},
@@ -254,7 +247,6 @@ const Container = (Component) => (
 				setOrUpdateGame(game);
 
 				this.setState({
-					hash,
 					pages
 				}, () => {
 					this.loadPageInfo(this.state.activePage);
@@ -606,6 +598,10 @@ const Container = (Component) => (
 			const { getAPIResource } = SWApi;
 			const { getGame } = LocalStorageHelpers;
 
+			if (!hash) {
+				this.props.history.push(`/swquiz/${this.createHash()}`)
+			}
+
 			let game = getGame(hash);
 
 			const loadGame = () => {
@@ -763,13 +759,19 @@ const Container = (Component) => (
 		 * @description Start a game by setting it's dateTimeStart and dateTimeLimit, considering this.props.timeLimit.
 		 */
 		startGame() {
-			const { dateTimeStart, hash } = this.state;
+			const { dateTimeStart, hash, play } = this.state;
 			const { timeLimit } = this.props;
 			const { setGameData } = LocalStorageHelpers;
 
 			const addMinutes = (date, minutes) => {
 				return new Date(date.getTime() + minutes * 60000);
 			};
+
+			if (!play) {
+				this.setState({
+					play: true
+				});
+			}
 
 			if (!dateTimeStart) {
 				this.setState({

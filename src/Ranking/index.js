@@ -18,7 +18,7 @@ const Ranking = (props) => {
 				{
 					games.length ?
 						games.map((game, i) => (
-							<div className={styles.item}>
+							<div key={`${game}-${i}`} className={styles.item}>
 								<div className={styles.position}>
 									{i + 1} - {game.name}
 								</div>
