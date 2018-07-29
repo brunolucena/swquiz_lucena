@@ -13,7 +13,6 @@
 
 .items {
 	display: grid;
-	margin: 1rem;
 	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 
 	.emptyItens {

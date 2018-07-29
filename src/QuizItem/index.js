@@ -39,7 +39,7 @@ const QuizItem = (props) => {
 								value={playerNameGuess}
 								onChange={(event) => { handleInputChange(event, id) }}
 							/>,
-							<button key="button" className={styles.button} onClick={() => { openHintModal(id) }}>
+							<button key="button" className={styles.buttonSmall} onClick={() => { openHintModal(id) }}>
 								Dicas...
 							</button>,
 

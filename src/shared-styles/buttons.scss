@@ -1,6 +1,6 @@
 @import './variables';
 
-.button{
+.button {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -29,12 +29,25 @@
 	}
 }
 
-.buttonLight{
+.buttonLight {
 	@extend .button;
 
 	border: none;
 
 	#{$p-event} {
+		color: $primary1Color;
+		background: none;
+	}
+}
+
+.buttonSmall {
+	@extend .button;
+
+	border: none;
+	padding: 0;
+	border: none;
+
+	#{$p-event}{
 		color: $primary1Color;
 		background: none;
 	}
