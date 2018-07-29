@@ -16,7 +16,7 @@ const GameResult = (props) => {
 	return (
 		<div className={styles.gameResultWrapper}>
 			<div className={styles.top}>
-				Quiz ended!
+				Quiz finalizado!
 			</div>
 
 			<div className={styles.gameData}>
@@ -31,14 +31,14 @@ const GameResult = (props) => {
 					:
 						<div>
 							<div className={styles.score}>
-								<span>{score}</span> points
+								<span>{score}</span> pontos
 							</div>
 
 							{
 								!hasResult ?
 									<div>
 										<div className={styles.text}>
-											Fill the form below to save your score:
+											Preencha o formulário abaixo para salvar sua pontuação:
 										</div>
 
 										<div className={styles.inputsContainer}>
@@ -46,7 +46,7 @@ const GameResult = (props) => {
 												{...(formErrors.name && {error: !!formErrors.name})}
 												className={styles.textField}
 												helperText={formErrors.name}
-												label="Name"
+												label="Nome"
 												name="name"
 												onChange={handleInputChange}
 												value={name}
@@ -55,20 +55,20 @@ const GameResult = (props) => {
 												{...(formErrors.email && {error: !!formErrors.email})}
 												className={styles.textField}
 												helperText={formErrors.email}
-												label="Email"
+												label="E-mail"
 												name="email"
 												onChange={handleInputChange}
 												value={email}
 											/>
 										</div>
 
-										<button className={styles.button} onClick={saveGameData}>Save</button>
+										<button className={styles.button} onClick={saveGameData}>Salvar</button>
 									</div>
 								:
 									<div className={styles.resultData}>
-										<div>Name: {playerName}</div>
+										<div>Nome: {playerName}</div>
 										<div>Email: {playerEmail}</div>
-										<Link to="/" className={styles.button}>Back</Link>
+										<Link to="/" className={styles.button}>Voltar</Link>
 									</div>
 							}
 

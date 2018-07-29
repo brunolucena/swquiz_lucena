@@ -23,12 +23,12 @@ const Ranking = (props) => {
 									{i + 1} - {game.name}
 								</div>
 								<div>
-									Score: {game.score}
+									Pontuação: {game.score}
 								</div>
 							</div>
 						))
 					:
-						'No games saved.'
+						'Nenhum jogo salvo.'
 				}
 			</div>
 		</div>

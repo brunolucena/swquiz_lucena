@@ -15,11 +15,11 @@ const Pagination = (props) => {
 		<div className={styles.paginationWrapper}>
 			{
 				hasPrevious &&
-					<button className={styles.buttonLight} onClick={goToPreviousPage}><ChevronDoubleLeftIcon /> Previous</button>
+					<button className={styles.buttonLight} onClick={goToPreviousPage}><ChevronDoubleLeftIcon /> Anterior</button>
 			}
 			{
 				hasNext &&
-					<button className={styles.buttonLight} onClick={goToNextPage}>Next <ChevronDoubleRightIcon /></button>
+					<button className={styles.buttonLight} onClick={goToNextPage}>Próximo <ChevronDoubleRightIcon /></button>
 			}
 		</div>
 	);

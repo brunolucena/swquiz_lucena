@@ -35,12 +35,12 @@ const QuizItem = (props) => {
 								key="text-field"
 								className={styles.textField}
 								name="playerNameGuess"
-								label="Character Name"
+								label="Resposta"
 								value={playerNameGuess}
 								onChange={(event) => { handleInputChange(event, id) }}
 							/>,
 							<button key="button" className={styles.button} onClick={() => { openHintModal(id) }}>
-								Info...
+								Dicas...
 							</button>,
 
 							<Dialog key="dialog" open={openedModal} onClose={() => { closeHintModal(id) }} aria-labelledby="simple-dialog-title">

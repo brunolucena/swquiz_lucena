@@ -6,6 +6,7 @@ import { TrophyIcon } from 'mdi-react';
 
 import Dialog from '@material-ui/core/Dialog';
 
+import GameInfo from '../GameInfo';
 import Logo from '../Logo';
 import Ranking from '../Ranking';
 
@@ -38,7 +39,7 @@ const Home = (props) => {
 			</Dialog>
 
 			<div className={styles.gameInfo}>
-				Info
+				<GameInfo />
 			</div>
 		</section>
 	);
