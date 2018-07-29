@@ -683,8 +683,6 @@ const Container = (Component) => (
 						const split = url.split('/');
 						const id = split[split.length - 2];
 
-						console.log('Images', Images);
-
 						const itemImages = Images[id];
 
 						character.imageUrl = itemImages[getRandomInt(0, itemImages.length - 1)]
