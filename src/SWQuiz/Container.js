@@ -79,19 +79,19 @@ const Container = (Component) => (
 		componentDidMount() {
 			const { match: { params } } = this.props;
 
-			if (params.hash) {
-				this.setState({
-					hash: params.hash
-				}, () => {
-					this.loadInitialGameData();
-				});
-			} else {
-				const hash = this.createHash();
+			let hash = params.hash;
 
+			if (!hash) {
+				hash = this.createHash();
+			}
+
+			this.setState({
+				hash
+			}, () => {
 				this.props.history.push(`/swquiz/${hash}`)
 
 				this.loadInitialGameData();
-			}
+			});
 		}
 
 		/**
