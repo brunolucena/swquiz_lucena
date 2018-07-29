@@ -475,13 +475,9 @@ const Container = (Component) => (
 			let starships = character.starships;
 			let vehicles = character.vehicles;
 
-			character.films = [];
-			character.homeworld = {};
-			character.species = [];
-			character.starships = [];
-			character.vehicles = [];
-
 			if (!character.isHomeworldLoaded) {
+				character.homeworld = {};
+
 				getAPIResource(homeworld)
 					.then(response => {
 						character.homeworld = response.data;
@@ -501,7 +497,9 @@ const Container = (Component) => (
 				;
 			}
 
-			if (!character.isFilmsLoaded) {
+			if (!character.isFilmsLoaded && films.length > 0) {
+				character.films = [];
+
 				films.forEach((filmUrl, indexFilms) => {
 					getAPIResource(filmUrl)
 						.then(response => {
@@ -525,7 +523,9 @@ const Container = (Component) => (
 				});
 			}
 
-			if (!character.isSpeciesLoaded) {
+			if (!character.isSpeciesLoaded && species.length > 0) {
+				character.species = [];
+
 				species.forEach((speciesUrl, indexSpecies) => {
 					getAPIResource(speciesUrl)
 						.then(response => {
@@ -549,7 +549,9 @@ const Container = (Component) => (
 				});
 			}
 
-			if (!character.isStarshipsLoaded) {
+			if (!character.isStarshipsLoaded && starships.length > 0) {
+				character.starships = [];
+
 				starships.forEach((starshipsUrl, indexStarships) => {
 					getAPIResource(starshipsUrl)
 						.then(response => {
@@ -573,7 +575,9 @@ const Container = (Component) => (
 				});
 			}
 
-			if (!character.isVehiclesLoaded) {
+			if (!character.isVehiclesLoaded && vehicles.length > 0) {
+				character.vehicles = [];
+
 				vehicles.forEach((vehiclesUrl, indexVehicles) => {
 					getAPIResource(vehiclesUrl)
 						.then(response => {
