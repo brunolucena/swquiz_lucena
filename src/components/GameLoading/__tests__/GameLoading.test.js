@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import GameLoading from './';
+import GameLoading from '../';
 
 it('Test example', () => {
   const wrapper = shallow(<GameLoading />);

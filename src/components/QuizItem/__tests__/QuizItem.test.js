@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import QuizItem from './';
+import QuizItem from '../';
 
 it('Test example', () => {
   const wrapper = shallow(<QuizItem />);
