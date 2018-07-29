@@ -49,6 +49,7 @@ const SWQuiz = (props) => {
 									closeHintModal={closeHintModal}
 									handleInputChange={handleItemGuessInputChange}
 									id={item.url}
+									imageUrl={item.imageUrl}
 									isPlaceholder={isGameFinished || !dateTimeStart}
 									key={item.url}
 									openedModal={openedModal}
