@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
+import Images from '../../images';
+
 import { LocalStorageHelpers } from './Helpers';
 import { SWApi } from './Services';
 
@@ -39,7 +41,7 @@ const Container = (Component) => (
 			countdown: 3,
 			itensPerPage: 10,
 			pointsForFullAnswer: 10,
-			timeLimit: 120
+			timeLimit: 12000
 		};
 
 		constructor(props) {
@@ -353,6 +355,8 @@ const Container = (Component) => (
 			if (this.hasNextPage()) {
 				this.setState({
 					activePage: activePage + 1
+				}, () => {
+					this.loadPageInfo(this.state.activePage + 1);
 				});
 			}
 		}
@@ -366,6 +370,8 @@ const Container = (Component) => (
 			if (this.hasPreviousPage()) {
 				this.setState({
 					activePage: activePage - 1
+				}, () => {
+					this.loadPageInfo(this.state.activePage - 1);
 				});
 			}
 		}
@@ -664,23 +670,37 @@ const Container = (Component) => (
 			const { pages } = this.state;
 			const { getAPIResource } = SWApi;
 
-			pages[pageNumber].forEach((character, indexCharacter) => {
-				let isCharacterImageLoaded = false;
+			const getRandomInt = (min, max) => {
+				return Math.floor(Math.random() * (max - min + 1) + min);
+			}
 
-				if (!character.imageUrl) {
-					character.imageUrl = 'teste';
+			if (pages[pageNumber]) {
+				pages[pageNumber].forEach((character, indexCharacter) => {
+					let isCharacterImageLoaded = false;
 
-					pages[pageNumber][indexCharacter] = character;
+					if (!character.imageUrl) {
+						const url = character.url;
+						const split = url.split('/');
+						const id = split[split.length - 2];
 
-					if (indexCharacter + 1 == pages[pageNumber].length) {
-						this.setState({
-							isGameReady: true,
-							pages
-						});
+						console.log('Images', Images);
+
+						const itemImages = Images[id];
+
+						character.imageUrl = itemImages[getRandomInt(0, itemImages.length - 1)]
+
+						pages[pageNumber][indexCharacter] = character;
+
+						if (indexCharacter + 1 == pages[pageNumber].length) {
+							this.setState({
+								isGameReady: true,
+								pages
+							});
+						}
 					}
-				}
+				});
+			}
 
-			});
 
 			if (this.hasNextPage() && this.state.activePage + 1 == pageNumber + 1) {
 				this.loadPageInfo(this.state.activePage + 1);
