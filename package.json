@@ -59,6 +59,8 @@
   },
   "devDependencies": {
     "css-loader": "^1.0.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "node-sass": "^4.9.2",
     "sass-loader": "^7.0.3",
     "style-loader": "^0.21.0"
