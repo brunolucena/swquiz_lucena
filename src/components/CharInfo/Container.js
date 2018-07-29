@@ -22,7 +22,10 @@ const Container = (Component) => (
 					name: PropTypes.string
 				}),
 			]),
-			id: PropTypes.string,
+			id: PropTypes.oneOfType([
+				PropTypes.number,
+				PropTypes.string
+			]),
 			imageUrl: PropTypes.string,
 			loadCharacterInfo: PropTypes.func, // Function to load char info
 			mass: PropTypes.string,
