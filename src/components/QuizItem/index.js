@@ -15,11 +15,11 @@ const QuizItem = (props) => {
 	const imageStyles = {
 		backgroundColor: isPlaceholder ? '#b9b9b9' : 'initial',
 		backgroundImage: isPlaceholder ? 'initial' : `url(${imageUrl})`,
-		backgroundSize: '100px',
+		backgroundSize: '150px',
 		backgroundRepeat: 'no-repeat',
 		backgroundPosition: 'center',
-		height: '100px',
-		width: '100px'
+		height: '150px',
+		width: '150px'
 	};
 
 	return (
