@@ -1,5 +1,5 @@
-@import '../shared-styles/buttons';
-@import '../shared-styles/variables';
+@import '../../shared-styles/buttons';
+@import '../../shared-styles/variables';
 
 
 .homeWrapper {
@@ -14,7 +14,6 @@
   display: block;
   width: 236px;
   height: 221px;
-  background: url('../images/darth-vader.jpg');
   background-repeat: no-repeat;
 }
 
