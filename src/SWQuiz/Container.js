@@ -86,6 +86,10 @@ const Container = (Component) => (
 					this.loadInitialGameData();
 				});
 			} else {
+				const hash = this.createHash();
+
+				this.props.history.push(`/swquiz/${hash}`)
+
 				this.loadInitialGameData();
 			}
 		}
@@ -597,10 +601,6 @@ const Container = (Component) => (
 			const { hash } = this.state;
 			const { getAPIResource } = SWApi;
 			const { getGame } = LocalStorageHelpers;
-
-			if (!hash) {
-				this.props.history.push(`/swquiz/${this.createHash()}`)
-			}
 
 			let game = getGame(hash);
 
