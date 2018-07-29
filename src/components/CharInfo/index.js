@@ -107,7 +107,7 @@ const CharInfo = (props) => {
 						</div>
 				}
 				<div>
-					Data de Nascimento: {birth_year}
+					Ano de Nascimento: {birth_year}
 				</div>
 				<div>
 					Cor dos Olhos: {eye_color}
