@@ -41,7 +41,7 @@ const Container = (Component) => (
 			countdown: 3,
 			itensPerPage: 10,
 			pointsForFullAnswer: 10,
-			timeLimit: 120
+			timeLimit: 20
 		};
 
 		constructor(props) {
@@ -318,7 +318,7 @@ const Container = (Component) => (
 					score: calculateScore
 				}, () => {
 					setGameData(hash, 'dateTimeEnded', this.state.dateTimeEnded);
-					setGameData(hash, 'score', score);
+					setGameData(hash, 'score', calculateScore);
 				});
 			}
 		}
