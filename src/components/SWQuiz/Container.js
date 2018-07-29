@@ -71,6 +71,7 @@ const Container = (Component) => (
 			this.goToNextPage = this.goToNextPage.bind(this);
 			this.goToPreviousPage = this.goToPreviousPage.bind(this);
 			this.handleItemGuessInputChange = this.handleItemGuessInputChange.bind(this);
+			this.loadCharacterInfo = this.loadCharacterInfo.bind(this);
 			this.openHintModal = this.openHintModal.bind(this);
 			this.saveGameData = this.saveGameData.bind(this);
 			this.startGame = this.startGame.bind(this);
@@ -815,6 +816,7 @@ const Container = (Component) => (
 					hasPrevious={this.hasPreviousPage()}
 					isExpired={this.isExpired()}
 					itens={this.getItensFromPage(this.state.activePage)}
+					loadCharacterInfo={this.loadCharacterInfo}
 					openHintModal={this.openHintModal}
 					saveGameData={this.saveGameData}
 					startGame={this.startGame}

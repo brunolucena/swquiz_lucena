@@ -17,7 +17,7 @@ import styles from './styles.scss';
 const SWQuiz = (props) => {
 	const { answers, closeHintModal, dateTimeEnded, dateTimeLimit, dateTimeStart, email,
 			goToNextPage, goToPreviousPage, handleItemGuessInputChange, hasNext, hasPrevious,
-			isExpired, isGameFinished, isGameReady, itens, itensPerPage, name,
+			isExpired, isGameFinished, isGameReady, itens, itensPerPage, loadCharacterInfo, name,
 			openHintModal, play, saveGameData, score, startGame } = props;
 
 	const array = Array(itensPerPage).fill(0);
@@ -52,6 +52,7 @@ const SWQuiz = (props) => {
 									imageUrl={item.imageUrl}
 									isPlaceholder={isGameFinished || !dateTimeStart}
 									key={item.url}
+									loadCharacterInfo={loadCharacterInfo}
 									openedModal={openedModal}
 									openHintModal={openHintModal}
 									play={play}
