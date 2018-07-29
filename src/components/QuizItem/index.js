@@ -25,7 +25,6 @@ const QuizItem = (props) => {
 	return (
 		<div className={styles.item} style={{borderColor: isPlaceholder ? '#b9b9b9' : '#000'}}>
 			<div className={styles.image} style={imageStyles}>
-				{props.name}
 			</div>
 
 			<div className={styles.buttons}>
