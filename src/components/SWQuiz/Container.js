@@ -392,7 +392,7 @@ const Container = (Component) => (
 				answer = {
 					url: id,
 					text: event.target.value
-				}
+				};
 
 				answers.push(answer);
 			}

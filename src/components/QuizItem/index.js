@@ -10,7 +10,7 @@ import styles from './styles.scss';
 
 
 const QuizItem = (props) => {
-	const { closeHintModal, handleInputChange, id, isPlaceholder, imageUrl, openedModal, openHintModal, playerNameGuess } = props;
+	const { closeHintModal, handleInputChange, id, isPlaceholder, imageUrl, openedModal, openHintModal, playerGuess } = props;
 
 	const imageStyles = {
 		backgroundColor: isPlaceholder ? '#b9b9b9' : 'initial',
@@ -25,6 +25,7 @@ const QuizItem = (props) => {
 	return (
 		<div className={styles.item} style={{borderColor: isPlaceholder ? '#b9b9b9' : '#000'}}>
 			<div className={styles.image} style={imageStyles}>
+				{props.name}
 			</div>
 
 			<div className={styles.buttons}>
@@ -34,9 +35,9 @@ const QuizItem = (props) => {
 							<TextField
 								key="text-field"
 								className={styles.textField}
-								name="playerNameGuess"
+								name="playerGuess"
 								label="Resposta"
-								value={playerNameGuess}
+								value={playerGuess}
 								onChange={(event) => { handleInputChange(event, id) }}
 							/>,
 							<button key="button" className={styles.buttonSmall} onClick={() => { openHintModal(id) }}>
