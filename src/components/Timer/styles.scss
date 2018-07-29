@@ -1,6 +1,10 @@
 @import '../../shared-styles/variables';
 
 .timerContainer {
+	position: fixed;
+	top: 1rem;
+	right: 1rem;
+
 	> .timer {
 		padding: 0.5rem 1rem;
 		border-radius: 5px;
