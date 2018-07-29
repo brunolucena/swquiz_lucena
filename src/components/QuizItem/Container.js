@@ -30,6 +30,7 @@ const Container = (Component) => (
 			mass: PropTypes.string,
 			openedModal: PropTypes.bool, // Open modal with hints.
 			openHintModal: PropTypes.func, // Function that treats when a modal is opened.
+			play: PropTypes.bool, // Is game playing
 			playerGuess: PropTypes.string, // Player answer for that item.
 			skin_color: PropTypes.string,
 			species: PropTypes.oneOfType([

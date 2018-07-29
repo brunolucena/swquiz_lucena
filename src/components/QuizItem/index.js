@@ -10,7 +10,7 @@ import styles from './styles.scss';
 
 
 const QuizItem = (props) => {
-	const { closeHintModal, handleInputChange, id, isPlaceholder, imageUrl, openedModal, openHintModal, playerGuess } = props;
+	const { closeHintModal, handleInputChange, id, isPlaceholder, imageUrl, openedModal, openHintModal, play, playerGuess } = props;
 
 	const imageStyles = {
 		backgroundColor: isPlaceholder ? '#b9b9b9' : 'initial',
@@ -43,7 +43,7 @@ const QuizItem = (props) => {
 								Dicas...
 							</button>,
 
-							<Dialog key="dialog" open={openedModal} onClose={() => { closeHintModal(id) }} aria-labelledby="simple-dialog-title">
+							<Dialog key="dialog" open={openedModal && play} onClose={() => { closeHintModal(id) }} aria-labelledby="simple-dialog-title">
 								<CharInfo {...props} />
 							</Dialog>
 						]

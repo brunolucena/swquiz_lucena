@@ -54,6 +54,7 @@ const SWQuiz = (props) => {
 									key={item.url}
 									openedModal={openedModal}
 									openHintModal={openHintModal}
+									play={play}
 									playerGuess={playerGuess}
 								/>
 							)
