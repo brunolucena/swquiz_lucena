@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import Container from './Container'
@@ -24,10 +24,10 @@ const Logo = (props) => {
 	}
 
 	return (
-		<div className={styles.logoWrapper} style={logoWrapperStyles}>
+		<Link to="/" className={styles.logoWrapper} style={logoWrapperStyles}>
 			<span className={styles.logo} style={logoStyles} />
 			<span style={titleStyles}>StarQuiz!</span>
-		</div>
+		</Link>
 	);
 }
 
@@ -37,4 +37,4 @@ Logo.propTypes = {
 	type: PropTypes.string // horizontal or vertical
 };
 
-export default Container(Logo);
+export default withRouter(Container(Logo));
