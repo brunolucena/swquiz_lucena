@@ -32,6 +32,9 @@ const Container = (Component) => (
 			}
 		}
 
+		/**
+		 * @description Starts a countdown from this.state.timeLeft to 0, and then starts game
+		 */
 		countdown() {
 			const { timeLeft } = this.state;
 			const { startGame } = this.props;

@@ -299,6 +299,9 @@ const Container = (Component) => (
 			return text;
 		}
 
+		/**
+		 * @description Checks if game has expired and saves data on state and localStorage
+		 */
 		gameCounter() {
 			const { hash, score } = this.state;
 			const { setGameData } = LocalStorageHelpers;

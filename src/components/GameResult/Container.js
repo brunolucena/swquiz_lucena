@@ -59,6 +59,9 @@ const Container = (Component) => (
 			});
 		}
 
+		/**
+		 * @description Handles how game data is saved
+		 */
 		saveGameDataHandler(event) {
 			const { email, name } = this.state;
 			const { saveGameData } = this.props;
@@ -75,6 +78,14 @@ const Container = (Component) => (
 			}
 		}
 
+		/**
+		 * @description Validates a field
+		 *
+		 * @param {string} fieldName Field name
+		 * @param {string} value Field value
+		 *
+		 * @returns {object} Object containing if it's valid and apropriate message if it's not
+		 */
 		validateField(fieldName, value) {
 			const validator = {
 				valid: true,
@@ -104,6 +115,11 @@ const Container = (Component) => (
 		  	return validator
 		}
 
+		/**
+		 * @description Validates all form.
+		 *
+		 * @returns {bool} Is form valid
+		 */
 		validateForm() {
 			const { formErrors } = this.state;
 

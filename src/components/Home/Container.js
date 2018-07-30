@@ -24,6 +24,11 @@ const Container = (Component) => (
 			});
 		}
 
+		/**
+		 * @description Gets the has of last pending game.
+		 *
+		 * @returns {string} Last game pending hash
+		 */
 		getPendingGameHash() {
 			const { getLastPendingGame } = LocalStorageHelpers;
 
