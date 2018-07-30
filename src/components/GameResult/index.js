@@ -10,7 +10,7 @@ import styles from './styles.scss';
 
 
 const GameResult = (props) => {
-	const { email, handleInputChange, hasResult, formErrors, loading, loadingMessage,
+	const { email, formErrors, handleInputChange, hasResult, loading, loadingMessage,
 			name, playerEmail, playerName, saveGameData, score } = props;
 
 	return (
@@ -81,6 +81,7 @@ const GameResult = (props) => {
 
 GameResult.propTypes = {
 	email: PropTypes.string, // Email input if data has not been saved yet
+	formErrors: PropTypes.object, // Object containing form validation data. Ex: {'input-name': 'error message'}
 	handleInputChange: PropTypes.func.isRequired, // Function to change input text
 	hasResult: PropTypes.bool.isRequired, // Game has a result
 	loading: PropTypes.bool.isRequired, // Is result being loaded

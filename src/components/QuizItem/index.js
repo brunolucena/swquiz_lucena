@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Dialog from '@material-ui/core/Dialog';
 import TextField from '@material-ui/core/TextField';
@@ -10,7 +11,7 @@ import styles from './styles.scss';
 
 
 const QuizItem = (props) => {
-	const { closeHintModal, handleInputChange, id, isPlaceholder, imageUrl, openedModal, openHintModal, play, playerGuess } = props;
+	const { closeHintModal, handleInputChange, id, imageUrl, isPlaceholder, openedModal, openHintModal, play, playerGuess } = props;
 
 	const imageStyles = {
 		backgroundColor: isPlaceholder ? '#b9b9b9' : 'initial',
@@ -56,6 +57,18 @@ const QuizItem = (props) => {
 			</div>
 		</div>
 	);
+}
+
+QuizItem.propTypes = {
+	closeHintModal: PropTypes.func, // Function to close a modal
+	handleInputChange: PropTypes.func, // Function to change input text
+	id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]), // Necessary to verify the answers
+	imageUrl: PropTypes.string, // Url of image
+	isPlaceholder: PropTypes.bool, // Is item a placeholder
+	openedModal: PropTypes.bool, // Open modal with hints.
+	openHintModal: PropTypes.func, // Function to open modal
+	play: PropTypes.bool, // Is game playing
+	playerGuess: PropTypes.string, // Player answer for that item
 }
 
 export default Container(QuizItem);

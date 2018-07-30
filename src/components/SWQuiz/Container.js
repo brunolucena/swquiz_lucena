@@ -10,23 +10,18 @@ import { SWApi } from './Services';
 /**
  * -SWQuiz is an instance of a Star Wars Quiz Game.
  * -The game is built over the API https://swapi.co/
- * -When the game starts loading, it awaits until at least two pages are fully loaded so the game
- * can start.
+ * -When the game starts loading, it awaits until all pages are loaded so the game can start.
+ * -Each game has a random order of chars displayed.
  * -When the game is ready, a countdown will apear so the player can prepare.
- * -A page is considered as fully loaded when all persons from that page are loaded and it's respective
- * data: image, homeworld, films, species, vehicles and starships.
- * -When the player goes to the next page, if there are more pages, then the next page is loaded.
+ * -A page is considered as fully loaded when all persons from that page and each char image are loaded. But
+ * 	the extra info of each is loaded when requested.
+ * -When the player goes to the next page, if there are more pages, then the next page images are loaded.
  * -All of this assures that the player has quick access to each page and characters info as needed,
- * considering that the game is a tempo game.
+ *	considering that the game is a tempo game.
  * -A game is considered as finished only when the player has saved his name and email. Otherwise, if the
- * time limit has reached, the player will always be prompted to put his data to consider tha game as finished.
- * -Every request to the API saves the content of it in the state and the page that was requested.
- * Ex: A request to '/people/?page=2' saves the content of the results and the number '2' at 'pagesLoadedFromAPI'.
- * -This is done so that the game can random the characters on each game, instead of showing always the same characters.
- * -The first API request is made only to get how many pages are available at the API, by using the data.results.length and
- * data.count to calculate how many pages are available. So, if the API receives more characters, the game will consider then.
- * -The first API request also saves it's result on pagesLoadedFromAPI, which can be be used later.
- * -Each page from the API is randomed selected and shown.
+ *	time limit has reached, the player will always be prompted to put his data to consider tha game as finished.
+ * -Each game has it's data saved on localStorage, including pages. Because of that, the user can resume
+ *	a game and the chars displayed will be always at the same order.
  */
 const Container = (Component) => (
 	class extends React.Component {
@@ -41,7 +36,7 @@ const Container = (Component) => (
 			countdown: 3,
 			itensPerPage: 10,
 			pointsForFullAnswer: 10,
-			timeLimit: 20
+			timeLimit: 120
 		};
 
 		constructor(props) {

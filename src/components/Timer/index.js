@@ -60,7 +60,8 @@ Timer.propTypes = {
 	]).isRequired, // DateTime limit to finish game
 	isStarted: PropTypes.bool.isRequired, // Timer is started
 	isVisible: PropTypes.bool, // Timer is visible
-	timePlaceholder: PropTypes.number.isRequired // Display placeholder of how many time the player will have. In seconds
+	timePlaceholder: PropTypes.number.isRequired, // Display placeholder of how many time the player will have. In seconds
+	timeWarning: PropTypes.bool // Should display a time warning
 };
 
 export default Container(Timer);

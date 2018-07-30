@@ -32,8 +32,8 @@ const Logo = (props) => {
 }
 
 Logo.propTypes = {
-	imageUrl: PropTypes.string.isRequired,
-	size: PropTypes.number, // 0.1 to 1
+	imageUrl: PropTypes.string.isRequired, // Url of the image logo
+	size: PropTypes.number, // In px
 	type: PropTypes.string // horizontal or vertical
 };
 

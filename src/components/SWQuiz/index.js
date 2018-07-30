@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import Dialog from '@material-ui/core/Dialog';
 
@@ -96,6 +97,44 @@ const SWQuiz = (props) => {
 			</Dialog>
 		</div>
 	);
+}
+
+SWQuiz.propTypes = {
+	answers: PropTypes.arrayOf(PropTypes.shape({
+		text: PropTypes.string, // Player answer
+		url: PropTypes.string // Url of the actual char
+	})), //
+	closeHintModal: PropTypes.func, // Function to close hint modal
+	dateTimeEnded: PropTypes.oneOfType([ // DateTime that the game was ended
+		PropTypes.string,
+		PropTypes.instanceOf(Date)
+	]),
+	dateTimeLimit: PropTypes.oneOfType([ // DateTime limit to finish the game
+		PropTypes.string,
+		PropTypes.instanceOf(Date)
+	]),
+	dateTimeStart: PropTypes.oneOfType([ // DateTime that the game was started
+		PropTypes.string,
+		PropTypes.instanceOf(Date)
+	]),
+	email: PropTypes.string, // Email of the player
+	goToNextPage: PropTypes.func, // Function to go to next page
+	goToPreviousPage: PropTypes.func, // Function to go to previous page
+	handleItemGuessInputChange: PropTypes.func, // Function to change input text of player guess
+	hasNext: PropTypes.bool, // Has next page
+	hasPrevious: PropTypes.bool, // Has previous page
+	isExpired: PropTypes.bool, // Is game expired
+	isGameFinished: PropTypes.bool, // Is game finished
+	isGameReady: PropTypes.bool, // Is game ready to start
+	itens: PropTypes.arrayOf(PropTypes.object), // Char itens to display
+	itensPerPage: PropTypes.number, // Maximum itens on each page. Used to display placeholders.
+	loadCharacterInfo: PropTypes.func, // Function to load character info
+	name: PropTypes.string, // Player name
+	openHintModal: PropTypes.func, // Function to open modal
+	play: PropTypes.bool, // Is game playing
+	saveGameData: PropTypes.func, // Function to save game data
+	score: PropTypes.number, // Player score
+	startGame: PropTypes.func, // Function to start a game
 }
 
 export default withRouter(Container(SWQuiz));

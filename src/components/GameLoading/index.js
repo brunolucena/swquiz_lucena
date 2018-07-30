@@ -31,7 +31,8 @@ const GameLoading = (props) => {
 
 GameLoading.propTypes = {
 	isReadyToStart: PropTypes.bool.isRequired, // Game is ready to start
-	startGame: PropTypes.func.isRequired // Function to start a game
+	loadingMessage: PropTypes.string.isRequired, // Message to display while loading
+	timeLeft: PropTypes.number.isRequired // Counter to start game
 };
 
 export default Container(GameLoading);
