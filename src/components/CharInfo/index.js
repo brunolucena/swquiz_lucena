@@ -80,8 +80,6 @@ const CharInfo = (props) => {
 			<div className={styles.top}>
 				Detalhes!
 			</div>
-			
-			<div>Teste</div>
 
 			<div className={styles.charInfo}>
 				<div className={styles.image} style={imageStyles}>

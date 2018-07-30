@@ -11,9 +11,12 @@ Ao carregar um jogo, todas as páginas da API são carregadas. Essa decisão foi
 
 Além disso, carregar as páginas previamente permitiu que fosse possível randomizar os jogos, para que nenhum fosse igual a outro.
 
+
 O jogo foi desenvolvido para ser customizável. Informações como: quantidade de itens por página, pontos por uma resposta certa, pontos por uma resposta certa tendo usado as dicas, pontos por uma resposta parcialmente certa, tempo limite, dentre outros, são facilmente customizáveis através de variáveis.
 
 Os únicos dados que são carregados somente quando requisitados são as dicas de um personagem. No entanto, esses dados são carregados dinamicamente e bem rápidos, não influenciando no andamento do jogo.
+
+Se o jogador sair de um jogo sem finalizá-lo, na tela inicial aparecerá um botão de continuar.
 
 O jogo foi pensado para ter um histórico de jogos para exibir um ranking e para que o jogador possa resumir um jogo não finalizado dentro do tempo limite.
 
