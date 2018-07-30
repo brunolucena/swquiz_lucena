@@ -153,6 +153,10 @@ const Container = (Component) => (
 
 			let gameScore = 0;
 
+			if (apiPeople.length == 0) {
+				this.loadInitialGameData()
+			}
+
 			if (answers) {
 				answers.forEach(answer => {
 					const expected = apiPeople.find(people => people.url == answer.url).name;
